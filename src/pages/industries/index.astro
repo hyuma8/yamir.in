@@ -1,0 +1,26 @@
+---
+// GOAL: a buyer sees their industry named and clicks through to proof.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { industries } from '../../data/site';
+---
+<BaseLayout
+  title="Industries — Packaging for FMCG, Pharma and Food | Yamir Packaging"
+  description="Folding cartons for FMCG, pharmaceutical and food brands. What each industry needs from a carton supplier, and how Yamir meets it."
+>
+  <Breadcrumbs items={[{ label: 'Industries' }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap">
+      <h1>Industries we serve</h1>
+      <p class="lead">Each industry asks something different of a carton. These pages state what you need and show how we meet it.</p>
+      <div class="grid grid--3" style="margin-top:2rem">
+        {industries.map((i) => (
+          <a class="card card-block" href={`/industries/${i.slug}`}>
+            <h3>{i.name}</h3>
+            <p class="muted">{i.answer}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

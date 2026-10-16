@@ -1,0 +1,74 @@
+---
+// One page per product type. GOAL: answer "can Yamir make this for me?" in two
+// sentences, show options and specs, then ask for the enquiry.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Needs from '../../components/Needs.astro';
+import Photo from '../../components/Photo.astro';
+import Faq from '../../components/Faq.astro';
+import { products, industries, company } from '../../data/site';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+const { product } = Astro.props;
+const related = industries.filter((i) => i.productSlugs.includes(product.slug));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.name,
+  description: product.answer,
+  brand: { '@type': 'Organization', name: company.name },
+  manufacturer: { '@type': 'Organization', name: company.name },
+  url: `${company.domain}/products/${product.slug}`,
+};
+---
+<BaseLayout
+  title={`${product.name} — Manufacturer in Gujarat | Yamir Packaging`}
+  description={product.answer.slice(0, 155)}
+  schema={[schema]}
+>
+  <Breadcrumbs items={[{ label: 'Products', href: '/products' }, { label: product.name }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap two">
+      <div>
+        <h1>{product.name}</h1>
+        <p class="lead">{product.answer}</p>
+        <a class="btn btn--accent" href="#enquiry">Enquire about {product.name.toLowerCase()}</a>
+      </div>
+      <Photo shot={`${product.name}: 3–4 real samples we have made, on a plain surface, soft daylight`} />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap two">
+      <div>
+        <h2>Best for</h2>
+        <ul>{product.bestFor.map((b) => <li>{b}</li>)}</ul>
+        <h2 style="margin-top:2rem">Options</h2>
+        <ul>{product.options.map((o) => <li><Needs text={o} /></li>)}</ul>
+      </div>
+      <div>
+        <h2>Specifications</h2>
+        <table class="spec">
+          <tbody>
+            {product.specs.map(([k, v]) => <tr><th scope="row">{k}</th><td><Needs text={v} /></td></tr>)}
+          </tbody>
+        </table>
+        {related.length > 0 && (
+          <p class="small muted" style="margin-top:1.5rem">
+            Used in: {related.map((r, i) => <Fragment>{i > 0 && ', '}<a href={`/industries/${r.slug}`}>{r.name}</a></Fragment>)}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={product.faqs} title={`Questions about ${product.name.toLowerCase()}`} />
+</BaseLayout>
+
+<style>
+  .two { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+</style>

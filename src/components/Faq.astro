@@ -1,0 +1,30 @@
+---
+import Needs from './Needs.astro';
+interface Props { items: { q: string; a: string }[]; title?: string }
+const { items, title = 'Common questions' } = Astro.props;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+{items.length > 0 && (
+  <section class="section">
+    <div class="wrap">
+      <h2>{title}</h2>
+      <div class="faq">
+        {items.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p><Needs text={f.a} /></p>
+          </details>
+        ))}
+      </div>
+    </div>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </section>
+)}

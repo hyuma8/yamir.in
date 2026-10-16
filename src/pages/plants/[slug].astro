@@ -1,0 +1,74 @@
+---
+// One page per plant, with LocalBusiness schema for local search.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Needs from '../../components/Needs.astro';
+import Photo from '../../components/Photo.astro';
+import { plants, company, isNeeds } from '../../data/site';
+
+export function getStaticPaths() {
+  return plants.map((p) => ({ params: { slug: p.slug }, props: { plant: p } }));
+}
+const { plant } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${company.domain}/plants/${plant.slug}`,
+  name: `${company.name} — ${plant.name}`,
+  parentOrganization: { '@type': 'Organization', name: company.name, url: company.domain },
+  image: `${company.domain}/images/yamir-logo.png`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: isNeeds(plant.address) ? '' : plant.address,
+    addressLocality: plant.city,
+    addressRegion: 'Gujarat',
+    addressCountry: 'IN',
+  },
+  ...(plant.lat && plant.lng ? { geo: { '@type': 'GeoCoordinates', latitude: plant.lat, longitude: plant.lng } } : {}),
+  telephone: company.phoneHref.replace('tel:', ''),
+};
+---
+<BaseLayout
+  title={`${plant.name}, ${plant.city} — Yamir Packaging`}
+  description={`Yamir Packaging's ${plant.name} in ${plant.locality}. Address, what it makes, capacity and key machines.`}
+  schema={[schema]}
+>
+  <Breadcrumbs items={[{ label: 'Plants', href: '/plants' }, { label: plant.name }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap two">
+      <div>
+        <h1>{plant.name}</h1>
+        <p class="lead">{plant.summary} Located in {plant.locality}.</p>
+        <table class="spec">
+          <tbody>
+            <tr><th scope="row">Address</th><td><Needs text={plant.address} /></td></tr>
+            <tr><th scope="row">Makes</th><td><Needs text={plant.products} /></td></tr>
+            <tr><th scope="row">Capacity</th><td><Needs text={plant.capacity} /></td></tr>
+            <tr><th scope="row">Built-up area</th><td><Needs text={plant.area} /></td></tr>
+            <tr><th scope="row">People</th><td><Needs text={plant.people} /></td></tr>
+            <tr><th scope="row">Operating since</th><td><Needs text={plant.since} /></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:1.5rem"><a class="btn btn--outline" href={isNeeds(plant.mapsUrl) ? '#' : plant.mapsUrl} rel="noopener">Open in Google Maps</a></p>
+      </div>
+      <div class="stack">
+        <Photo shot={`${plant.name}: exterior with signboard, wide, morning light`} variant="wide" />
+        <Photo shot={`${plant.name}: main press hall, operators at work`} variant="wide" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <h2>Key machines at {plant.city}</h2>
+      <ul>{plant.keyMachines.map((m) => <li><Needs text={m} /></li>)}</ul>
+      <p class="small muted">Other plants: {plants.filter((p) => p.slug !== plant.slug).map((p, i) => <Fragment>{i > 0 && ' · '}<a href={`/plants/${p.slug}`}>{p.name}</a></Fragment>)}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .two { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+</style>

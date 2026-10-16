@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+.env
+.env.*
+_archive-2026-07/

@@ -1,0 +1,30 @@
+---
+// Appears above the footer on every page: direct contact lines + short form.
+import { company } from '../data/site';
+import EnquiryForm from './EnquiryForm.astro';
+import Needs from './Needs.astro';
+---
+<section class="section section--alt" id="enquiry">
+  <div class="wrap band">
+    <div>
+      <h2>Tell us what you need packed</h2>
+      <p class="lead">Send a few details and a packaging specialist will call you back within one working day.</p>
+      <ul class="contact">
+        <li><span class="contact__k">Phone</span><a href={company.phoneHref}><Needs text={company.phone} /></a></li>
+        <li><span class="contact__k">WhatsApp</span><a href={company.whatsappHref} rel="noopener"><Needs text={company.whatsapp} /></a></li>
+        <li><span class="contact__k">Email</span><a href={company.emailHref}><Needs text={company.email} /></a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <EnquiryForm />
+    </div>
+  </div>
+</section>
+<style>
+  .band { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 860px) { .band { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .contact { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  .contact li { display: flex; gap: 1rem; padding: 0.6rem 0; border-top: 1px solid var(--line); }
+  .contact li:last-child { border-bottom: 1px solid var(--line); }
+  .contact__k { width: 90px; color: var(--text-soft); flex: none; }
+</style>

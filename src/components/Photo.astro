@@ -1,0 +1,9 @@
+---
+// Placeholder for a REAL photo (no stock images on this site).
+// `shot` describes what to photograph. Replace with <img> once shot.
+interface Props { shot: string; variant?: 'wide' | 'tall' | '' }
+const { shot, variant = '' } = Astro.props;
+---
+<div class={`photo ${variant ? `photo--${variant}` : ''}`} role="img" aria-label={`Photo to be added: ${shot}`}>
+  <span><strong>Photo to shoot</strong><br />{shot}</span>
+</div>

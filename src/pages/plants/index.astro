@@ -1,0 +1,28 @@
+---
+// GOAL: show the plants are real and where they are. Supports local search.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Photo from '../../components/Photo.astro';
+import { plants } from '../../data/site';
+---
+<BaseLayout
+  title="Plants — Kadi, Bharuch and Mandva, Gujarat | Yamir Packaging"
+  description="Yamir Packaging runs three carton plants in Gujarat: Kadi near Ahmedabad, Bharuch, and Mandva between Bharuch and Ankleshwar. Address, capacity and machines for each."
+>
+  <Breadcrumbs items={[{ label: 'Plants' }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap">
+      <h1>Three plants in Gujarat</h1>
+      <p class="lead">Kadi is near Ahmedabad. Bharuch and Mandva are in South Gujarat on the Ahmedabad–Mumbai highway. You are welcome to visit any of them.</p>
+      <div class="grid grid--3" style="margin-top:2rem">
+        {plants.map((p) => (
+          <a class="card card-block" href={`/plants/${p.slug}`}>
+            <Photo shot={`${p.name} exterior with signboard`} />
+            <h3 style="margin-top:1rem">{p.name}</h3>
+            <p class="muted">{p.locality}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import { proof } from '../data/site';
+---
+<div class="wrap">
+  <ul class="proof" aria-label="Key facts">
+    {proof.map((p) => (
+      <li class="proof__item">
+        <span class="proof__value">{p.value}</span>
+        <span class="proof__label">{p.label}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+<style>
+  .proof { list-style: none; margin: 0; padding-left: 0; }
+</style>

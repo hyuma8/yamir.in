@@ -1,0 +1,71 @@
+---
+import '@fontsource-variable/ibm-plex-sans';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import EnquiryBand from '../components/EnquiryBand.astro';
+import { company } from '../data/site';
+
+interface Props {
+  title: string;        // title tag — unique per page, under ~60 chars
+  description: string;  // meta description — unique per page, under ~155 chars
+  schema?: object[];    // extra schema.org objects for this page
+  noEnquiry?: boolean;  // contact page has its own form
+  noindex?: boolean;    // thank-you page
+}
+const { title, description, schema = [], noEnquiry = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: company.name,
+  url: company.domain,
+  logo: `${company.domain}/images/yamir-logo.png`,
+  description: company.description,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: company.phoneHref.replace('tel:', ''),
+    email: company.emailHref.replace('mailto:', ''),
+    areaServed: 'IN',
+    availableLanguage: ['en', 'hi', 'gu'],
+  },
+};
+const schemas = [organization, ...schema];
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={company.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${company.domain}/images/yamir-logo.png`} />
+    <meta name="theme-color" content="#faf8f5" />
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    {!noEnquiry && <EnquiryBand />}
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip { position: absolute; left: -999px; top: 0; background: var(--primary); color: #fff; padding: 0.5rem 1rem; z-index: 100; }
+  .skip:focus { left: 1rem; top: 1rem; }
+</style>

@@ -1,0 +1,9 @@
+---
+// Renders text. If it is a [NEEDS INPUT: ...] marker, highlights it in yellow
+// so gaps are obvious in the browser. Replace the value in src/data/site.ts
+// and the highlight disappears.
+import { isNeeds } from '../data/site';
+interface Props { text: string }
+const { text } = Astro.props;
+---
+{isNeeds(text) ? <mark class="needs">{text}</mark> : <Fragment>{text}</Fragment>}

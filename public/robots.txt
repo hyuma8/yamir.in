@@ -1,0 +1,5 @@
+# Yamir Packaging Pvt. Ltd. — all crawlers welcome, including AI crawlers.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.yamir.in/sitemap-index.xml

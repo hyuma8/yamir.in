@@ -1,0 +1,48 @@
+---
+// GOAL: zero friction. Phone, WhatsApp, email, five-field form, plant addresses.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Needs from '../components/Needs.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { company, plants } from '../data/site';
+---
+<BaseLayout
+  title="Contact Yamir Packaging — Phone, WhatsApp, Email, Enquiry Form"
+  description="Call, WhatsApp or email Yamir Packaging, or send a five-field enquiry. Plant addresses for Kadi, Bharuch and Mandva, Gujarat."
+  noEnquiry
+>
+  <Breadcrumbs items={[{ label: 'Contact' }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap two">
+      <div>
+        <h1>Contact</h1>
+        <p class="lead">Pick whichever is easiest. A packaging specialist replies within one working day.</p>
+        <ul class="contact">
+          <li><span class="contact__k">Phone</span><a href={company.phoneHref}><Needs text={company.phone} /></a></li>
+          <li><span class="contact__k">WhatsApp</span><a href={company.whatsappHref} rel="noopener"><Needs text={company.whatsapp} /></a></li>
+          <li><span class="contact__k">Email</span><a href={company.emailHref}><Needs text={company.email} /></a></li>
+        </ul>
+
+        <h2 style="margin-top:2.5rem">Addresses</h2>
+        <p><strong>Registered office</strong><br /><Needs text={company.registeredOffice} /></p>
+        {plants.map((p) => (
+          <p><strong><a href={`/plants/${p.slug}`}>{p.name}</a></strong><br /><Needs text={p.address} /></p>
+        ))}
+        <p class="small muted">GSTIN: <Needs text={company.gstin} /></p>
+      </div>
+      <div class="card">
+        <h2 style="font-size:1.3rem">Send an enquiry</h2>
+        <EnquiryForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .two { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .contact { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  .contact li { display: flex; gap: 1rem; padding: 0.6rem 0; border-top: 1px solid var(--line); }
+  .contact li:last-child { border-bottom: 1px solid var(--line); }
+  .contact__k { width: 90px; color: var(--text-soft); flex: none; }
+</style>

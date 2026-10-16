@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Needs from '../../components/Needs.astro';
+import Photo from '../../components/Photo.astro';
+import { industries, products } from '../../data/site';
+
+export function getStaticPaths() {
+  return industries.map((i) => ({ params: { slug: i.slug }, props: { industry: i } }));
+}
+const { industry } = Astro.props;
+const related = products.filter((p) => industry.productSlugs.includes(p.slug));
+---
+<BaseLayout
+  title={`${industry.name} Packaging — Folding Cartons | Yamir Packaging`}
+  description={industry.answer.slice(0, 155)}
+>
+  <Breadcrumbs items={[{ label: 'Industries', href: '/industries' }, { label: industry.name }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap two">
+      <div>
+        <h1>{industry.name} packaging</h1>
+        <p class="lead">{industry.answer}</p>
+        <a class="btn btn--accent" href="#enquiry">Send an enquiry</a>
+      </div>
+      <Photo shot={`Real ${industry.name} cartons we have made (only with client approval), or the production line that makes them`} />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap two">
+      <div>
+        <h2>What {industry.name} buyers need</h2>
+        <ul>{industry.needs.map((n) => <li>{n}</li>)}</ul>
+      </div>
+      <div>
+        <h2>How we meet it</h2>
+        <ul>{industry.how.map((h) => <li><Needs text={h} /></li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Products for {industry.name}</h2>
+      <div class="grid grid--3">
+        {related.map((p) => (
+          <a class="card card-block" href={`/products/${p.slug}`}><h3>{p.name}</h3><p class="muted">{p.short}</p></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .two { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+</style>

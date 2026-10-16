@@ -1,0 +1,57 @@
+---
+// GOAL: answer the brand's sustainability questionnaire before they send it.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Needs from '../components/Needs.astro';
+import Photo from '../components/Photo.astro';
+import { NEEDS } from '../data/site';
+---
+<BaseLayout
+  title="Sustainability — FSC, ISO 14001, EcoVadis Bronze | Yamir Packaging"
+  description="Yamir Packaging holds an EcoVadis Bronze medal, FSC chain-of-custody and ISO 14001 certification. What we measure, what we have changed, and what we offer brands."
+>
+  <Breadcrumbs items={[{ label: 'Sustainability' }]} />
+  <section class="section" style="padding-top:2rem">
+    <div class="wrap two">
+      <div>
+        <h1>Sustainability, with the paperwork</h1>
+        <p class="lead">Paperboard is recyclable and comes from a renewable source. We back that with third-party ratings and certificates your team can file.</p>
+        <ul>
+          <li><strong>EcoVadis Bronze medal</strong> — <Needs text={NEEDS('year awarded, percentile if you want to state it')} /></li>
+          <li><strong>FSC® chain of custody</strong> — FSC-certified board available on request. Licence: <Needs text={NEEDS('FSC licence code')} /></li>
+          <li><strong>ISO 14001:2015</strong> — environmental management system. <Needs text={NEEDS('which plants are covered')} /></li>
+        </ul>
+      </div>
+      <Photo shot="Board reels in the store with FSC labels visible" />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <h2>What we measure and what we have changed</h2>
+      <p class="muted">Only real, measured figures go here. Each line needs a number, a year and a source.</p>
+      <ul>
+        <li><Needs text={NEEDS('energy — e.g. rooftop solar kW installed, % of consumption')} /></li>
+        <li><Needs text={NEEDS('waste — % of board waste sent for recycling')} /></li>
+        <li><Needs text={NEEDS('inks and coatings — low-migration / water-based policy')} /></li>
+        <li><Needs text={NEEDS('water — treatment or reuse at plants')} /></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>What we offer brands</h2>
+      <div class="grid grid--3">
+        <div class="card"><h3>FSC-certified board</h3><p class="muted">Available on request, with chain-of-custody documentation.</p></div>
+        <div class="card"><h3>Lighter constructions</h3><p class="muted"><Needs text={NEEDS('do we offer board-weight optimisation / structural redesign to cut material?')} /></p></div>
+        <div class="card"><h3>Supplier questionnaires</h3><p class="muted">EcoVadis scorecard and certificates shared with your procurement team on request.</p></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .two { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+</style>

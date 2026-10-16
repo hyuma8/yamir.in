@@ -1,0 +1,21 @@
+---
+// Five fields, posts to Web3Forms (or any form endpoint). Works without JS.
+import { company } from '../data/site';
+interface Props { subject?: string }
+const { subject = 'Enquiry from yamir.in' } = Astro.props;
+---
+<form class="enq" method="POST" action={company.formEndpoint}>
+  <input type="hidden" name="access_key" value={company.formAccessKey} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="redirect" value={`${company.domain}/thank-you`} />
+  <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+  <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" required autocomplete="name" /></div>
+  <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" required autocomplete="organization" /></div>
+  <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" /></div>
+  <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required autocomplete="email" /></div>
+  <div class="field"><label for="f-msg">What do you need packed? <span class="muted small">(product, quantity, timeline)</span></label><textarea id="f-msg" name="message" required></textarea></div>
+
+  <button class="btn btn--accent" type="submit">Send enquiry</button>
+  <p class="small muted" style="margin-top:0.75rem">We reply within one working day. No newsletters, no spam.</p>
+</form>
