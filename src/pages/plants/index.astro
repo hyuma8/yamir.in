@@ -1,28 +1,44 @@
 ---
-// GOAL: show the plants are real and where they are. Supports local search.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import Photo from '../../components/Photo.astro';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Plate from '../../components/Plate.astro';
 import { plants } from '../../data/site';
 ---
-<BaseLayout
-  title="Plants — Kadi, Bharuch and Mandva, Gujarat | Yamir Packaging"
-  description="Yamir Packaging runs three carton plants in Gujarat: Kadi near Ahmedabad, Bharuch, and Mandva between Bharuch and Ankleshwar. Address, capacity and machines for each."
->
-  <Breadcrumbs items={[{ label: 'Plants' }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap">
-      <h1>Three plants in Gujarat</h1>
-      <p class="lead">Kadi is near Ahmedabad. Bharuch and Mandva are in South Gujarat on the Ahmedabad–Mumbai highway. You are welcome to visit any of them.</p>
-      <div class="grid grid--3" style="margin-top:2rem">
-        {plants.map((p) => (
-          <a class="card card-block" href={`/plants/${p.slug}`}>
-            <Photo shot={`${p.name} exterior with signboard`} />
-            <h3 style="margin-top:1rem">{p.name}</h3>
-            <p class="muted">{p.locality}</p>
-          </a>
-        ))}
-      </div>
+<Base title="Plants — Kadi, Bharuch and Mandva, Gujarat | Yamir Packaging" description="Yamir Packaging runs three carton plants in Gujarat: Kadi near Ahmedabad, Bharuch, and Mandva between Bharuch and Ankleshwar. Address, capacity and machines for each.">
+  <section class="m sec--top two">
+    <div>
+      <Crumbs items={[{ label: 'Plants' }]} />
+      <h1 style="margin-top:3rem">Three plants, one highway.</h1>
+      <p class="lead" style="margin-top:1.6rem">Kadi serves Ahmedabad and North Gujarat. Bharuch and Mandva sit in South Gujarat on the Ahmedabad–Mumbai highway. You are welcome at any of them before you place an order.</p>
     </div>
+    <svg class="route" viewBox="0 0 420 440" role="img" aria-label="Route diagram: Kadi, Ahmedabad, Bharuch, Mandva, Ankleshwar along the national highway">
+      <path class="rd" d="M110 30 V410"/>
+      <circle class="plant" cx="110" cy="60" r="6"/><text class="big" x="140" y="66">Kadi</text><text class="k" x="140" y="84">Mehsana district</text>
+      <circle class="city" cx="110" cy="150" r="5"/><text x="140" y="155">Ahmedabad</text>
+      <circle class="plant" cx="110" cy="275" r="6"/><text class="big" x="140" y="281">Bharuch</text><text class="k" x="140" y="299">Bharuch district</text>
+      <circle class="plant" cx="110" cy="325" r="6"/><text class="big" x="140" y="331">Mandva</text><text class="k" x="140" y="349">on the highway</text>
+      <circle class="city" cx="110" cy="375" r="5"/><text x="140" y="380">Ankleshwar</text>
+      <text class="k" x="110" y="430" text-anchor="middle">NH 48 · Mumbai ↓</text>
+    </svg>
   </section>
-</BaseLayout>
+  <section class="m sec rows">
+    {plants.map((p) => (
+      <a href={`/plants/${p.slug}`} class="row">
+        <Plate id={`plant-${p.slug}-ext`} ratio="3/2" />
+        <div><h2>{p.name}</h2><p class="prose" style="margin-top:1rem">{p.locality}. {p.short}</p><span class="lnk" style="display:inline-block;margin-top:1.6rem">The plant</span></div>
+      </a>
+    ))}
+  </section>
+</Base>
+<style>
+  .route { width: 100%; max-width: 420px; height: auto; font-family: var(--sans); justify-self: end; }
+  .route .rd { stroke: var(--hair-2); stroke-width: 1; fill: none; }
+  .route .city { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+  .route .plant { fill: var(--ink); }
+  .route text { fill: var(--ink); font-size: 14px; }
+  .route .k { font-size: 11px; fill: var(--soft); letter-spacing: .08em; text-transform: uppercase; }
+  .route .big { font-family: var(--serif); font-size: 22px; }
+  .rows { display: grid; gap: var(--gap); }
+  .row { display: grid; grid-template-columns: 5fr 7fr; gap: var(--gap); align-items: center; padding-top: var(--gap); border-top: 1px solid var(--hair); }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; } .route { justify-self: start; } }
+</style>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Enquiry from '../components/Enquiry.astro';
+import Needs from '../components/Needs.astro';
+import { company, plants } from '../data/site';
+---
+<Base title="Enquire — Yamir Packaging" description="Call, WhatsApp or email Yamir Packaging, or send a five-field enquiry. Plant addresses for Kadi, Bharuch and Mandva, Gujarat." noEnquiry>
+  <div style="padding-top:96px"></div>
+  <Enquiry title="Enquire" />
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <span class="lbl">Addresses</span>
+    <div class="ledger">
+      <div><b>Registered office</b><span><Needs text={company.registeredOffice} /></span><i></i></div>
+      {plants.map((p) => <div><b><a href={`/plants/${p.slug}`}>{p.name} plant</a></b><span><Needs text={p.address} /></span><i></i></div>)}
+      <div><b>GSTIN</b><span><Needs text={company.gstin} /></span><i></i></div>
+    </div>
+  </section>
+</Base>

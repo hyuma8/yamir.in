@@ -5,12 +5,14 @@ Static site built with [Astro](https://astro.build). Deployed on Vercel. Domain 
 ## How the site is organised
 
 ```
-src/data/site.ts        → ALL facts and copy live here (company, plants, products, industries, certs, FAQs)
-src/pages/              → one file per page; [slug] files generate one page per product / industry / plant
-src/components/         → Header, Footer, EnquiryForm, EnquiryBand, Faq, Breadcrumbs, Photo, ProofBar, Needs
-src/layouts/BaseLayout  → <head>, SEO tags, Organization schema, header + footer + enquiry band on every page
-src/styles/global.css   → design system (colours, type, buttons, cards)
+src/data/site.ts        → ALL facts, copy and the photograph shot list (company, plants, cartons, industries, certs, FAQs, shots)
+src/pages/              → one file per page; [slug] files generate one page per carton / industry / plant
+src/components/         → Header, Footer, Enquiry, Carton (3D hero), Dieline, Plate (photo slot), Faq, Crumbs, Needs
+src/layouts/Base.astro  → <head>, SEO tags, Organization schema, header + enquiry + footer on every page
+src/styles/global.css   → design system
+public/photos/          → photographs, named <id>.webp as listed in site.ts (npm run shots prints the list)
 public/                 → logo (SVG + PNG), favicon, robots.txt
+_archive-2026-07/       → earlier drafts, not deployed
 _archive-2026-07/       → the July attempt, kept for reference, not deployed
 ```
 
@@ -18,12 +20,14 @@ Anything shown with a **yellow highlight** on the site is a `[NEEDS INPUT: …]`
 Replace the value in `src/data/site.ts` (or the page file) and the highlight goes away.
 Search the whole project for `NEEDS(` to list every gap.
 
-## Design rules (from the brief)
+## Design system ("airy luxury", agreed 9 Oct 2026)
 
-- Colours: deep blue `#1c3f60` (headings, dark band), warm off-white `#faf8f5`, dark grey text `#2b2b2b`, brand orange `#c2410c` for buttons only. All pairs pass WCAG AA.
-- One typeface: IBM Plex Sans (self-hosted via Fontsource, no external requests).
-- Body text 17px. Lots of white space. No animation that moves on its own.
-- Real photos only. The dashed "Photo to shoot" boxes are the shot list.
+- Warm white paper `#f7f5f0`, near-black ink `#1c1c1a`, hairlines `#e3dfd6`. Colour appears only in the logo. Buttons are ink.
+- Two typefaces, self-hosted: Cormorant Garamond (display, light) and Hanken Grotesk (text, labels).
+- Page margin 7vw, section spacing 9rem. Few elements per screen.
+- Home hero: an unprinted CSS carton that turns as you scroll, with its dieline drawing behind (scroll-driven, no autoplay).
+- Photographs: `Plate` shows the real photo when `public/photos/<id>.webp` exists, otherwise a quiet blank plate with the shot description. Pages look finished either way.
+- A `[NEEDS INPUT]` marker is a fact still missing. Search `NEEDS(` to list them.
 
 ## Work locally (on the Mac)
 

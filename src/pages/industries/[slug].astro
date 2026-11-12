@@ -1,58 +1,31 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Plate from '../../components/Plate.astro';
 import Needs from '../../components/Needs.astro';
-import Photo from '../../components/Photo.astro';
-import { industries, products } from '../../data/site';
-
-export function getStaticPaths() {
-  return industries.map((i) => ({ params: { slug: i.slug }, props: { industry: i } }));
-}
-const { industry } = Astro.props;
-const related = products.filter((p) => industry.productSlugs.includes(p.slug));
+import { industries, cartons } from '../../data/site';
+export function getStaticPaths() { return industries.map((i) => ({ params: { slug: i.slug }, props: { i } })); }
+const { i } = Astro.props;
+const related = cartons.filter((c) => i.cartonSlugs.includes(c.slug));
 ---
-<BaseLayout
-  title={`${industry.name} Packaging — Folding Cartons | Yamir Packaging`}
-  description={industry.answer.slice(0, 155)}
->
-  <Breadcrumbs items={[{ label: 'Industries', href: '/industries' }, { label: industry.name }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap two">
-      <div>
-        <h1>{industry.name} packaging</h1>
-        <p class="lead">{industry.answer}</p>
-        <a class="btn btn--accent" href="#enquiry">Send an enquiry</a>
-      </div>
-      <Photo shot={`Real ${industry.name} cartons we have made (only with client approval), or the production line that makes them`} />
+<Base title={`${i.name} Packaging — Folding Cartons | Yamir Packaging`} description={i.answer.slice(0, 155)}>
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Industries', href: '/industries' }, { label: i.name }]} />
+    <div class="two" style="margin-top:3rem;align-items:end">
+      <div><h1>{i.name}</h1><p class="lead" style="margin-top:1.6rem">{i.answer}</p></div>
+      <Plate id={`ind-${i.slug}`} />
     </div>
   </section>
-
-  <section class="section section--alt">
-    <div class="wrap two">
-      <div>
-        <h2>What {industry.name} buyers need</h2>
-        <ul>{industry.needs.map((n) => <li>{n}</li>)}</ul>
-      </div>
-      <div>
-        <h2>How we meet it</h2>
-        <ul>{industry.how.map((h) => <li><Needs text={h} /></li>)}</ul>
-      </div>
-    </div>
+  <section class="m sec two two--even" style="border-top:1px solid var(--hair)">
+    <div><span class="lbl">What {i.name} buyers need</span><ul class="list">{i.needs.map((n) => <li>{n}</li>)}</ul></div>
+    <div><span class="lbl">How we meet it</span><ul class="list">{i.how.map((h) => <li><Needs text={h} /></li>)}</ul></div>
   </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2>Products for {industry.name}</h2>
-      <div class="grid grid--3">
-        {related.map((p) => (
-          <a class="card card-block" href={`/products/${p.slug}`}><h3>{p.name}</h3><p class="muted">{p.short}</p></a>
-        ))}
-      </div>
-    </div>
+  <section class="m sec" style="border-top:1px solid var(--hair)">
+    <span class="lbl">Cartons for {i.name}</span>
+    <ul class="coll" style="margin-top:1rem">{related.map((c) => <li><a href={`/cartons/${c.slug}`}><span class="n">{c.name}</span><span class="d">{c.d}</span></a></li>)}</ul>
   </section>
-</BaseLayout>
-
+</Base>
 <style>
-  .two { display: grid; gap: 2.5rem; align-items: start; }
-  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .list { margin-top: .6rem; }
+  .list li { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; padding: .7rem 0; border-bottom: 1px solid var(--hair); }
 </style>

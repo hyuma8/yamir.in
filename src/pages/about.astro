@@ -1,83 +1,47 @@
 ---
-// GOAL: the buyer sees a real, stable, family-run manufacturer with real people.
-// PRIMARY KEYWORD: "Yamir Packaging" (brand query)
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Plate from '../components/Plate.astro';
 import Needs from '../components/Needs.astro';
-import Photo from '../components/Photo.astro';
 import { company, NEEDS } from '../data/site';
-
 const milestones = [
-  { year: NEEDS('year'), what: NEEDS('first press / company founded') },
-  { year: NEEDS('year'), what: NEEDS('Yamir Packaging Pvt. Ltd. incorporated') },
-  { year: NEEDS('year'), what: NEEDS('Kadi plant started') },
-  { year: NEEDS('year'), what: NEEDS('Bharuch plant started') },
-  { year: NEEDS('year'), what: NEEDS('Mandva plant started') },
-  { year: '2026', what: 'Hyuma Mahadevia takes over as Managing Director from his father.' },
+  [NEEDS('year'), NEEDS('first press, company founded')],
+  [NEEDS('year'), NEEDS('Yamir Packaging Pvt. Ltd. incorporated')],
+  [NEEDS('year'), NEEDS('Kadi plant')], [NEEDS('year'), NEEDS('Bharuch plant')], [NEEDS('year'), NEEDS('Mandva plant')],
+  ['2026', 'Hyuma Mahadevia becomes Managing Director.'],
 ];
 ---
-<BaseLayout
-  title="About Yamir Packaging — Family-run Carton Manufacturer, Gujarat"
-  description="Yamir Packaging is a family-run paperboard packaging company with three plants in Gujarat. Who we are, how we are led, and what we stand for."
->
-  <Breadcrumbs items={[{ label: 'About' }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap two">
-      <div>
-        <h1>A family-run carton maker, now in its second generation</h1>
-        <p class="lead">{company.shortName} has made printed paperboard packaging since <Needs text={company.foundedYear} />. Today it runs three plants in Gujarat and is led by Hyuma Mahadevia, who joined the company in 2000 and became Managing Director in 2026.</p>
-        <p><Needs text={NEEDS('2–3 sentences in Hyuma’s words on what the company stands for — quality, people, long relationships. Plain and specific.')} /></p>
-      </div>
-      <Photo shot="Hyuma on the shop floor with plant team, candid, not posed" />
+<Base title="About Yamir Packaging — Family-run Carton Manufacturer, Gujarat" description="Yamir Packaging is a family-run folding carton company with three plants in Gujarat. Who we are, how we are led, and how we work.">
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'About' }]} />
+    <div class="two" style="margin-top:3rem;align-items:end">
+      <div><h1>A family firm, in its second generation.</h1><p class="lead" style="margin-top:1.6rem">{company.shortName} has made printed paperboard packaging since <Needs text={company.foundedYear} />. It is led by Hyuma Mahadevia, who joined in 2000 and became Managing Director in 2026.</p></div>
+      <Plate id="about-hyuma" />
     </div>
   </section>
-
-  <section class="section section--alt">
-    <div class="wrap">
-      <h2>Milestones</h2>
-      <table class="spec">
-        <tbody>{milestones.map((m) => <tr><th scope="row"><Needs text={m.year} /></th><td><Needs text={m.what} /></td></tr>)}</tbody>
-      </table>
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <span class="lbl">In his words</span>
+    <p class="quote"><Needs text={NEEDS('three or four sentences from Hyuma on what the company stands for: quality, people, long relationships. Plain and specific.')} /></p>
+  </section>
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <span class="lbl">Milestones</span>
+    <div class="ledger">{milestones.map(([y, w]) => <div><b><Needs text={y} /></b><span><Needs text={w} /></span><i></i></div>)}</div>
+  </section>
+  <section class="m sec" style="border-top:1px solid var(--hair)">
+    <span class="lbl">Leadership</span>
+    <div class="people">
+      <div><Plate id="about-portrait-md" /><h3>Hyuma Mahadevia</h3><span class="lbl">Managing Director</span><p class="prose small">With Yamir since 2000. Oversees production, quality, procurement and HR across all plants. IIM Ahmedabad alumnus.</p></div>
+      <div><Plate id="about-portrait-2" /><h3><Needs text={NEEDS('name')} /></h3><span class="lbl"><Needs text={NEEDS('role')} /></span><p class="prose small"><Needs text={NEEDS('two lines')} /></p></div>
+      <div><Plate id="about-portrait-3" /><h3><Needs text={NEEDS('name')} /></h3><span class="lbl"><Needs text={NEEDS('role')} /></span><p class="prose small"><Needs text={NEEDS('two lines')} /></p></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="wrap">
-      <h2>Leadership</h2>
-      <div class="grid grid--3">
-        <div class="card">
-          <Photo shot="Hyuma Mahadevia, head and shoulders, plant background" variant="tall" />
-          <h3 style="margin-top:1rem">Hyuma Mahadevia</h3>
-          <p class="muted">Managing Director. With Yamir since 2000. Oversees production, quality, procurement and HR across all plants. IIM Ahmedabad alumnus.</p>
-        </div>
-        <div class="card">
-          <Photo shot="Plant head portrait" variant="tall" />
-          <h3 style="margin-top:1rem"><Needs text={NEEDS('name')} /></h3>
-          <p class="muted"><Needs text={NEEDS('role, years with Yamir')} /></p>
-        </div>
-        <div class="card">
-          <Photo shot="Quality head portrait" variant="tall" />
-          <h3 style="margin-top:1rem"><Needs text={NEEDS('name')} /></h3>
-          <p class="muted"><Needs text={NEEDS('role, years with Yamir')} /></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="wrap">
-      <h2>How we work</h2>
-      <p class="muted">Short, specific, true. Three things a buyer can check.</p>
-      <div class="grid grid--3">
-        <div class="card"><h3><Needs text={NEEDS('e.g. Quality Day')} /></h3><p class="muted"><Needs text={NEEDS('what it is, how often, who takes part')} /></p></div>
-        <div class="card"><h3><Needs text={NEEDS('e.g. Kaizen programme')} /></h3><p class="muted"><Needs text={NEEDS('what it is, a real result')} /></p></div>
-        <div class="card"><h3><Needs text={NEEDS('e.g. plant KPIs')} /></h3><p class="muted"><Needs text={NEEDS('which KPIs, shared with customers?')} /></p></div>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
-
+  <section class="m" style="padding-bottom:var(--sec)"><Plate id="about-team" /></section>
+</Base>
 <style>
-  .two { display: grid; gap: 2.5rem; align-items: start; }
-  @media (min-width: 860px) { .two { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+  .quote { font-family: var(--serif); font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.35; font-weight: 300; }
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 1.5rem; }
+  .people h3 { margin-top: 1.4rem; }
+  .people .lbl { display: block; margin: .4rem 0 .8rem; }
+  .small { font-size: .95rem; }
+  @media (max-width: 900px) { .people { grid-template-columns: 1fr; } }
 </style>

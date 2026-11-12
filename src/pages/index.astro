@@ -1,109 +1,94 @@
 ---
-// GOAL: a B2B buyer understands in 10 seconds what we make, where, and that we
-// are certified — then sends an enquiry.
-// READER: purchase head / packaging development manager / brand owner.
-// PRIMARY KEYWORD: "paperboard packaging manufacturer Gujarat" (to confirm with keyword research)
-// ONE ACTION: Send enquiry.
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProofBar from '../components/ProofBar.astro';
-import Photo from '../components/Photo.astro';
+// HOME. Goal: a buyer feels in ten seconds that this is a serious carton maker,
+// and finds the enquiry. Primary keyword: folding carton manufacturer Gujarat.
+import Base from '../layouts/Base.astro';
+import Carton from '../components/Carton.astro';
+import Dieline from '../components/Dieline.astro';
+import Plate from '../components/Plate.astro';
 import Faq from '../components/Faq.astro';
-import { products, industries, plants, certifications, faqsGeneral } from '../data/site';
+import { cartons, plants, certifications, faqsGeneral } from '../data/site';
 ---
-<BaseLayout
-  title="Yamir Packaging — Paperboard Carton Manufacturer, Gujarat"
-  description="Printed folding cartons for FMCG, pharma and food brands. Three plants in Gujarat (Kadi, Bharuch, Mandva). ISO 9001, FSSC 22000, FSC certified. Send an enquiry."
+<Base
+  title="Yamir Packaging — Folding Carton Manufacturer, Gujarat"
+  description="Folding cartons for FMCG, pharma and food brands, made in three plants in Gujarat: Kadi, Bharuch and Mandva. ISO 9001, FSSC 22000, FSC, EcoVadis Bronze."
 >
-  <!-- HERO: one message, one action -->
-  <section class="section hero">
-    <div class="wrap hero__grid">
-      <div>
-        <h1>Printed paperboard cartons from three plants in Gujarat.</h1>
-        <p class="lead">Yamir Packaging makes folding cartons for FMCG, pharma and food brands from three plants in Kadi, Bharuch and Mandva. Certified to ISO 9001, FSSC 22000 and FSC.</p>
-        <div class="cluster">
-          <a class="btn btn--accent" href="/contact">Send enquiry</a>
-          <a class="btn btn--outline" href="/products">See products</a>
-        </div>
+  <!-- Hero: pinned for one screen; the carton turns as you scroll -->
+  <div class="hero">
+    <div class="pin m">
+      <i class="mark tl"></i><i class="mark tr"></i><i class="mark bl"></i><i class="mark br"></i>
+      <div class="copy">
+        <span class="lbl">Paperboard cartons · Gujarat, India</span>
+        <h1>Board.<br>Ink.<br>Crease.<br>Fold.</h1>
+        <p class="lead">Folding cartons for FMCG, pharma and food brands, made from the first sheet to the last glue line in our own three plants.</p>
+        <div class="cta"><a class="btn" href="/enquire">Send an enquiry</a><a class="lnk" href="/cartons">Carton styles</a></div>
       </div>
-      <Photo shot="Finished cartons stacked on a pallet at the end of a folder-gluer line, natural light, no people looking at camera" />
+      <Carton />
+      <div class="foot"><span class="lbl">Scroll to turn</span><span class="lbl">Kadi · Bharuch · Mandva</span></div>
+    </div>
+  </div>
+
+  <!-- Statement -->
+  <section class="statement m">
+    <p>Three plants in Gujarat, one way of working: the colour right, the board right, the carton where it should be on the day it was promised.</p>
+    <div class="facts">{certifications.map((c) => <span>{c.code}</span>)}</div>
+  </section>
+
+  <!-- The plant photograph -->
+  <section class="m" style="padding-bottom:var(--sec)">
+    <Plate id="home-plant" />
+  </section>
+
+  <!-- Carton styles -->
+  <section class="m sec two--rev two">
+    <div>
+      <div class="head"><span class="lbl">Carton styles</span><a class="lnk" href="/cartons">All styles</a></div>
+      <ul class="coll">{cartons.map((c) => <li><a href={`/cartons/${c.slug}`}><span class="n">{c.name}</span><span class="d">{c.d}</span></a></li>)}</ul>
+    </div>
+    <div class="side">
+      <Dieline kind="ste" large />
+      <div class="cap"><span class="lbl">Straight tuck end</span><span class="lbl">Cut — Crease ⋯</span></div>
     </div>
   </section>
 
-  <ProofBar />
-
-  <!-- PRODUCTS -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">What we make</p>
-      <h2>Folding cartons and cards for retail, pharma and food</h2>
-      <div class="grid grid--3">
-        {products.map((p) => (
-          <a class="card card-block" href={`/products/${p.slug}`}>
-            <h3>{p.name}</h3>
-            <p class="muted">{p.short}</p>
-          </a>
-        ))}
-      </div>
+  <!-- Plants -->
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <div>
+      <h2>Three plants, one highway.</h2>
+      <p class="prose" style="margin-top:1.4rem">Kadi serves Ahmedabad and North Gujarat. Bharuch and Mandva sit in the pharma and chemical belt of South Gujarat, on the Ahmedabad–Mumbai highway. You are welcome at any of them before you place an order.</p>
+      <a class="lnk" href="/plants" style="display:inline-block;margin-top:2rem">The plants</a>
     </div>
-  </section>
-
-  <!-- INDUSTRIES -->
-  <section class="section section--alt">
-    <div class="wrap">
-      <p class="eyebrow">Who we serve</p>
-      <h2>Built for buyers who cannot afford a packaging failure</h2>
-      <div class="grid grid--3">
-        {industries.map((i) => (
-          <a class="card card-block" href={`/industries/${i.slug}`}>
-            <h3>{i.name}</h3>
-            <p class="muted">{i.answer}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- PLANTS -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">Where we make it</p>
-      <h2>Three plants in Gujarat</h2>
-      <p class="lead">Kadi is near Ahmedabad. Bharuch and Mandva are in South Gujarat on the Ahmedabad–Mumbai highway. Each plant has its own page with address, capacity and machines.</p>
-      <div class="grid grid--3">
-        {plants.map((p) => (
-          <a class="card card-block" href={`/plants/${p.slug}`}>
-            <Photo shot={`Exterior of the ${p.name}, morning light`} />
-            <h3 style="margin-top:1rem">{p.name}</h3>
-            <p class="muted">{p.locality}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section class="section section--primary">
-    <div class="wrap">
-      <p class="eyebrow" style="color:var(--on-primary-soft)">Proof, not promises</p>
-      <h2>Certified where it matters to your auditors</h2>
-      <ul class="certs">
-        {certifications.map((c) => (
-          <li><strong>{c.code}</strong><span class="muted">{c.label}</span></li>
-        ))}
-      </ul>
-      <a class="btn btn--outline" href="/quality">How we control quality</a>
-    </div>
+    <div class="three">{plants.map((p) => <div><b><a href={`/plants/${p.slug}`}>{p.name}</a></b><span>{p.locality}</span></div>)}</div>
   </section>
 
   <Faq items={faqsGeneral} />
-</BaseLayout>
+</Base>
 
 <style>
-  .hero__grid { display: grid; gap: 2.5rem; align-items: center; }
-  @media (min-width: 860px) { .hero__grid { grid-template-columns: 1.1fr 1fr; gap: 4rem; } }
-  .hero h1 { margin-bottom: 1rem; }
-  .hero .cluster { margin-top: 1.5rem; }
-  .certs { list-style: none; padding: 0; margin: 1.5rem 0 2rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
-  .certs li { display: flex; flex-direction: column; padding: 1rem; border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius); }
-  .certs strong { color: #fff; font-size: 1.05rem; }
+  .hero { position: relative; height: 200vh; background: radial-gradient(110% 80% at 72% 25%, #fdfcfa 0%, var(--paper) 50%, #efebe3 100%); }
+  .pin { position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 5fr 7fr; align-items: center; }
+  .copy { padding-top: 96px; position: relative; z-index: 2; }
+  .copy .lbl { display: block; margin-bottom: 1.6rem; }
+  .copy .lead { margin: 1.8rem 0 2.4rem; max-width: 30ch; }
+  .cta { display: flex; align-items: center; gap: 2.2rem; }
+  .foot { position: absolute; left: var(--m); right: var(--m); bottom: 2rem; display: flex; justify-content: space-between; z-index: 2; }
+  .mark { position: absolute; width: 22px; height: 22px; pointer-events: none; opacity: .6; }
+  .mark::before, .mark::after { content: ''; position: absolute; background: var(--hair-2); }
+  .mark::before { width: 22px; height: 1px; top: 11px; } .mark::after { height: 22px; width: 1px; left: 11px; }
+  .mark.tl { left: 1.2rem; top: 7rem; } .mark.tr { right: 1.2rem; top: 7rem; } .mark.bl { left: 1.2rem; bottom: 1.2rem; } .mark.br { right: 1.2rem; bottom: 1.2rem; }
+
+  .statement { padding-top: calc(var(--sec) + 2rem); padding-bottom: var(--sec); display: grid; grid-template-columns: 2fr 8fr 2fr; }
+  .statement p { grid-column: 2; font-family: var(--serif); font-size: clamp(1.7rem, 2.9vw, 2.6rem); line-height: 1.3; font-weight: 300; text-align: center; text-wrap: balance; }
+  .statement .facts { grid-column: 2; display: flex; justify-content: center; gap: 1rem 3rem; margin-top: 3.5rem; flex-wrap: wrap; }
+  .statement .facts span { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+
+  .head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 1.2rem; }
+  .side { position: sticky; top: 7rem; padding-top: 2.6rem; }
+  .side .cap { display: flex; justify-content: space-between; margin-top: 1.2rem; }
+
+  @media (max-width: 900px) {
+    .hero { height: auto; } .pin { position: static; height: auto; grid-template-columns: 1fr; padding-top: 80px; }
+    .foot, .mark { display: none; }
+    .statement { grid-template-columns: 1fr; } .statement p, .statement .facts { grid-column: 1; }
+    .side { display: none; }
+  }
 </style>

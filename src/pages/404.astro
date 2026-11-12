@@ -1,15 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
 ---
-<BaseLayout title="Page not found — Yamir Packaging" description="That page does not exist." noEnquiry>
-  <section class="section">
-    <div class="wrap">
-      <h1>That page is not here</h1>
-      <p class="lead">The link may be old. Try the products page or contact us directly.</p>
-      <div class="cluster">
-        <a class="btn btn--outline" href="/products">Products</a>
-        <a class="btn btn--accent" href="/contact">Contact</a>
-      </div>
-    </div>
+<Base title="Not found — Yamir Packaging" description="That page does not exist." noEnquiry>
+  <section class="m sec--top" style="min-height:60vh;padding-bottom:var(--sec)">
+    <h1>That page is not here.</h1>
+    <p class="lead" style="margin:1.6rem 0 2.4rem">The link may be old. Try the carton styles, or write to us.</p>
+    <div style="display:flex;gap:2.2rem;align-items:center"><a class="btn" href="/cartons">Carton styles</a><a class="lnk" href="/enquire">Enquire</a></div>
   </section>
-</BaseLayout>
+</Base>

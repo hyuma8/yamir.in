@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Dieline from '../../components/Dieline.astro';
+import Plate from '../../components/Plate.astro';
+import { cartons } from '../../data/site';
+---
+<Base title="Carton Styles — Folding Cartons, Liner, Window, Foil, Blister | Yamir" description="Seven carton styles made at Yamir's three Gujarat plants: mono, liner, micro-flute, window, foil and Metpet, blister cards, pharma. Each with its dieline, options and specifications.">
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Cartons' }]} />
+    <div class="two" style="margin-top:3rem">
+      <div><h1>Carton styles</h1><p class="lead" style="margin-top:1.6rem">Every style below is printed, cut, creased and glued in our own plants. Pick the nearest one; we build to your drawing from there.</p></div>
+      <Plate id="cartons-hero" />
+    </div>
+  </section>
+  <section class="m sec grid">
+    {cartons.map((c) => (
+      <a href={`/cartons/${c.slug}`} class="item">
+        <Dieline kind={c.dieline} />
+        <h3>{c.name}</h3>
+        <span class="lbl">{c.d}</span>
+      </a>
+    ))}
+    <a href="/enquire" class="item item--ask"><span class="display" style="font-size:1.8rem">Your style</span><span class="lbl">Send a drawing or a sample</span></a>
+  </section>
+</Base>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); }
+  .item { display: grid; gap: .8rem; padding: 2.2rem 1.8rem 2rem; border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair); align-content: start; transition: background .25s; }
+  .item:hover { background: #fbfaf7; }
+  .item h3 { font-size: 1.5rem; margin-top: .6rem; }
+  .item--ask { justify-content: center; align-content: center; text-align: center; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+</style>

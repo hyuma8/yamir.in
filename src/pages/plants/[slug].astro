@@ -1,74 +1,41 @@
 ---
-// One page per plant, with LocalBusiness schema for local search.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Plate from '../../components/Plate.astro';
 import Needs from '../../components/Needs.astro';
-import Photo from '../../components/Photo.astro';
 import { plants, company, isNeeds } from '../../data/site';
-
-export function getStaticPaths() {
-  return plants.map((p) => ({ params: { slug: p.slug }, props: { plant: p } }));
-}
-const { plant } = Astro.props;
-
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': `${company.domain}/plants/${plant.slug}`,
-  name: `${company.name} — ${plant.name}`,
-  parentOrganization: { '@type': 'Organization', name: company.name, url: company.domain },
-  image: `${company.domain}/images/yamir-logo.png`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: isNeeds(plant.address) ? '' : plant.address,
-    addressLocality: plant.city,
-    addressRegion: 'Gujarat',
-    addressCountry: 'IN',
-  },
-  ...(plant.lat && plant.lng ? { geo: { '@type': 'GeoCoordinates', latitude: plant.lat, longitude: plant.lng } } : {}),
-  telephone: company.phoneHref.replace('tel:', ''),
-};
+export function getStaticPaths() { return plants.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const schema = { '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': `${company.domain}/plants/${p.slug}`, name: `${company.name}, ${p.name} plant`,
+  parentOrganization: { '@type': 'Organization', name: company.name, url: company.domain }, image: `${company.domain}/images/yamir-logo.png`, telephone: company.phone.replace(/\s/g, ''),
+  address: { '@type': 'PostalAddress', streetAddress: isNeeds(p.address) ? '' : p.address, addressLocality: p.city, addressRegion: 'Gujarat', addressCountry: 'IN' } };
 ---
-<BaseLayout
-  title={`${plant.name}, ${plant.city} — Yamir Packaging`}
-  description={`Yamir Packaging's ${plant.name} in ${plant.locality}. Address, what it makes, capacity and key machines.`}
-  schema={[schema]}
->
-  <Breadcrumbs items={[{ label: 'Plants', href: '/plants' }, { label: plant.name }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap two">
-      <div>
-        <h1>{plant.name}</h1>
-        <p class="lead">{plant.summary} Located in {plant.locality}.</p>
-        <table class="spec">
-          <tbody>
-            <tr><th scope="row">Address</th><td><Needs text={plant.address} /></td></tr>
-            <tr><th scope="row">Makes</th><td><Needs text={plant.products} /></td></tr>
-            <tr><th scope="row">Capacity</th><td><Needs text={plant.capacity} /></td></tr>
-            <tr><th scope="row">Built-up area</th><td><Needs text={plant.area} /></td></tr>
-            <tr><th scope="row">People</th><td><Needs text={plant.people} /></td></tr>
-            <tr><th scope="row">Operating since</th><td><Needs text={plant.since} /></td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:1.5rem"><a class="btn btn--outline" href={isNeeds(plant.mapsUrl) ? '#' : plant.mapsUrl} rel="noopener">Open in Google Maps</a></p>
-      </div>
-      <div class="stack">
-        <Photo shot={`${plant.name}: exterior with signboard, wide, morning light`} variant="wide" />
-        <Photo shot={`${plant.name}: main press hall, operators at work`} variant="wide" />
-      </div>
-    </div>
+<Base title={`${p.name} Plant — Yamir Packaging, Gujarat`} description={`Yamir Packaging's ${p.name} plant, ${p.locality}. Address, what it makes, capacity and key machines.`} schema={[schema]}>
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Plants', href: '/plants' }, { label: p.name }]} />
+    <h1 style="margin-top:3rem">{p.name}</h1>
+    <p class="lead" style="margin:1.6rem 0 3rem">{p.locality}. {p.short}</p>
+    <Plate id={`plant-${p.slug}-ext`} />
   </section>
-
-  <section class="section section--alt">
-    <div class="wrap">
-      <h2>Key machines at {plant.city}</h2>
-      <ul>{plant.keyMachines.map((m) => <li><Needs text={m} /></li>)}</ul>
-      <p class="small muted">Other plants: {plants.filter((p) => p.slug !== plant.slug).map((p, i) => <Fragment>{i > 0 && ' · '}<a href={`/plants/${p.slug}`}>{p.name}</a></Fragment>)}</p>
+  <section class="m sec two">
+    <div>
+      <span class="lbl">The plant</span>
+      <div class="ledger" style="margin-top:1rem">
+        <div><b>Address</b><span><Needs text={p.address} /></span><a class="lnk" href={isNeeds(p.mapsUrl) ? '#' : p.mapsUrl} rel="noopener">Map</a></div>
+        <div><b>Makes</b><span><Needs text={p.makes} /></span><i></i></div>
+        <div><b>Capacity</b><span><Needs text={p.capacity} /></span><i></i></div>
+        <div><b>Built-up area</b><span><Needs text={p.area} /></span><i></i></div>
+        <div><b>People</b><span><Needs text={p.people} /></span><i></i></div>
+        <div><b>Since</b><span><Needs text={p.since} /></span><i></i></div>
+      </div>
+      <span class="lbl" style="display:block;margin-top:2.5rem">Key machines</span>
+      <ul class="list">{p.machines.map((m) => <li><Needs text={m} /></li>)}</ul>
+      <p class="lbl" style="margin-top:2.5rem">Other plants: {plants.filter((x) => x.slug !== p.slug).map((x, i) => <Fragment>{i > 0 && ' · '}<a href={`/plants/${x.slug}`} style="border-bottom:1px solid var(--hair-2)">{x.name}</a></Fragment>)}</p>
     </div>
+    <Plate id={`plant-${p.slug}-int`} />
   </section>
-</BaseLayout>
-
+</Base>
 <style>
-  .two { display: grid; gap: 2.5rem; align-items: start; }
-  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .list { margin-top: .6rem; }
+  .list li { padding: .7rem 0; border-bottom: 1px solid var(--hair); }
 </style>

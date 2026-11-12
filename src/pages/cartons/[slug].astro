@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Dieline from '../../components/Dieline.astro';
+import Plate from '../../components/Plate.astro';
+import Needs from '../../components/Needs.astro';
+import Faq from '../../components/Faq.astro';
+import { cartons, industries, company } from '../../data/site';
+export function getStaticPaths() { return cartons.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const used = industries.filter((i) => i.cartonSlugs.includes(c.slug));
+const schema = { '@context': 'https://schema.org', '@type': 'Product', name: c.name, description: c.answer, url: `${company.domain}/cartons/${c.slug}`,
+  brand: { '@type': 'Organization', name: company.name }, manufacturer: { '@type': 'Organization', name: company.name } };
+---
+<Base title={`${c.name} — Manufacturer in Gujarat | Yamir Packaging`} description={c.answer.slice(0, 155)} schema={[schema]}>
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Cartons', href: '/cartons' }, { label: c.name }]} />
+    <div class="two" style="margin-top:3rem;align-items:center">
+      <div><h1>{c.name}</h1><p class="lead" style="margin:1.6rem 0 2.4rem">{c.answer}</p><a class="btn" href="#enquiry">Enquire about {c.name.toLowerCase()}</a></div>
+      <div><Dieline kind={c.dieline} large /><div class="cap"><span class="lbl">{c.d}</span><span class="lbl">Cut — Crease ⋯</span></div></div>
+    </div>
+  </section>
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <Plate id={`carton-${c.slug}`} />
+    <div>
+      <span class="lbl">Best for</span>
+      <ul class="list">{c.bestFor.map((b) => <li>{b}</li>)}</ul>
+      <span class="lbl" style="display:block;margin-top:2.5rem">Options</span>
+      <ul class="list">{c.options.map((o) => <li><Needs text={o} /></li>)}</ul>
+      <span class="lbl" style="display:block;margin-top:2.5rem">Specifications</span>
+      <div class="ledger">{c.specs.map(([k, v]) => <div><b>{k}</b><span><Needs text={v} /></span><i></i></div>)}</div>
+      {used.length > 0 && <p class="lbl" style="margin-top:2rem">Used in: {used.map((u, i) => <Fragment>{i > 0 && ', '}<a href={`/industries/${u.slug}`} style="border-bottom:1px solid var(--hair-2)">{u.name}</a></Fragment>)}</p>}
+    </div>
+  </section>
+  <Faq items={c.faqs} title={`About ${c.name.toLowerCase()}`} />
+</Base>
+<style>
+  .cap { display: flex; justify-content: space-between; margin-top: 1rem; }
+  .list li { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; padding: .6rem 0; border-bottom: 1px solid var(--hair); }
+  .list { margin-top: .6rem; }
+</style>

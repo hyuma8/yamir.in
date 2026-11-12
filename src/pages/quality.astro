@@ -1,67 +1,31 @@
 ---
-// GOAL: reduce the buyer's risk. Show the certificates and the QC process.
-// PRIMARY KEYWORD: "FSSC 22000 certified carton manufacturer" (to confirm)
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Plate from '../components/Plate.astro';
 import Needs from '../components/Needs.astro';
-import Photo from '../components/Photo.astro';
 import { certifications, NEEDS } from '../data/site';
-
-const qcSteps = [
-  { step: 'Incoming board', what: NEEDS('tests on incoming board — GSM, caliper, moisture?') },
-  { step: 'Prepress', what: NEEDS('artwork and colour proofing process') },
-  { step: 'On press', what: NEEDS('colour control — spectrophotometer, press-side checks') },
-  { step: 'Converting', what: NEEDS('die-cut and gluing checks') },
-  { step: 'Final inspection', what: NEEDS('camera inspection, sampling plan, release criteria') },
-  { step: 'Traceability', what: NEEDS('batch records retained for how long, COA offered?') },
+const steps = [
+  { s: 'Incoming board', w: NEEDS('tests on incoming board: GSM, caliper, moisture') },
+  { s: 'Prepress', w: NEEDS('artwork check and colour proofing process') },
+  { s: 'On press', w: NEEDS('colour control: spectrophotometer, press-side checks') },
+  { s: 'Converting', w: NEEDS('die-cut and gluing checks') },
+  { s: 'Final inspection', w: NEEDS('camera inspection, sampling plan, release criteria') },
+  { s: 'Traceability', w: NEEDS('batch records kept for how long; COA offered?') },
 ];
 ---
-<BaseLayout
-  title="Quality and Certifications — ISO 9001, FSSC 22000, FSC | Yamir"
-  description="Yamir Packaging is certified to ISO 9001, ISO 14001, ISO 45001, FSSC 22000 V6, SEDEX and FSC. See the certificates and the six-step QC process we run on every job."
->
-  <Breadcrumbs items={[{ label: 'Quality' }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap">
-      <h1>Quality you can audit</h1>
-      <p class="lead">Below are our certificates and the checks we make on each job. <Needs text={NEEDS('confirm which plants each certificate covers — all three, or site-specific?')} /></p>
-    </div>
+<Base title="Quality and Certifications — ISO 9001, FSSC 22000, FSC | Yamir" description="Yamir Packaging is certified to ISO 9001, ISO 14001, ISO 45001, FSSC 22000 V6, SEDEX and FSC, with an EcoVadis Bronze medal. The certificates, and the checks made on every job.">
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Quality' }]} />
+    <h1 style="margin-top:3rem">Quality you can audit.</h1>
+    <p class="lead" style="margin-top:1.6rem">Each certificate below is a document you can download and file. Below them, the checks we make on every job.</p>
   </section>
-
-  <section class="section section--alt" style="padding-top:0">
-    <div class="wrap">
-      <h2>Certifications</h2>
-      <div class="grid grid--3">
-        {certifications.map((c) => (
-          <div class="card">
-            <h3>{c.code}</h3>
-            <p class="muted">{c.label}</p>
-            <p class="small"><Needs text={c.body} /></p>
-            <p class="small muted" style="margin:0">Certificate PDF: <mark class="needs">[NEEDS INPUT: upload certificate]</mark></p>
-          </div>
-        ))}
-      </div>
-    </div>
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <div><span class="lbl">Certifications</span><p class="prose" style="margin-top:1rem"><Needs text={NEEDS('confirm which plants each certificate covers')} /></p></div>
+    <div class="ledger">{certifications.map((c) => <div><b>{c.code}</b><span>{c.label}</span><a class="lnk" href="#">{c.doc}</a></div>)}</div>
   </section>
-
-  <section class="section">
-    <div class="wrap two">
-      <div>
-        <h2>How we check every job</h2>
-        <ol class="steps">
-          {qcSteps.map((s) => <li><strong>{s.step}</strong><br /><Needs text={s.what} /></li>)}
-        </ol>
-      </div>
-      <div class="stack">
-        <Photo shot="QC lab: technician using the spectrophotometer on a printed sheet" />
-        <Photo shot="Camera inspection unit on the line, cartons passing through" />
-      </div>
-    </div>
+  <section class="m sec two" style="border-top:1px solid var(--hair)">
+    <div><span class="lbl">On every job</span><h2 style="margin-top:1rem">Six checks, in order.</h2><Plate id="qc-lab" class="pl" /></div>
+    <ol class="steps">{steps.map((x) => <li><div><b>{x.s}</b><span><Needs text={x.w} /></span></div></li>)}</ol>
   </section>
-</BaseLayout>
-
-<style>
-  .two { display: grid; gap: 2.5rem; align-items: start; }
-  @media (min-width: 860px) { .two { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
-  .steps li { margin-bottom: 1rem; }
-</style>
+</Base>
+<style>.pl { margin-top: 2.5rem; }</style>

@@ -1,26 +1,27 @@
 ---
-// GOAL: a buyer sees their industry named and clicks through to proof.
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Plate from '../../components/Plate.astro';
 import { industries } from '../../data/site';
 ---
-<BaseLayout
-  title="Industries — Packaging for FMCG, Pharma and Food | Yamir Packaging"
-  description="Folding cartons for FMCG, pharmaceutical and food brands. What each industry needs from a carton supplier, and how Yamir meets it."
->
-  <Breadcrumbs items={[{ label: 'Industries' }]} />
-  <section class="section" style="padding-top:2rem">
-    <div class="wrap">
-      <h1>Industries we serve</h1>
-      <p class="lead">Each industry asks something different of a carton. These pages state what you need and show how we meet it.</p>
-      <div class="grid grid--3" style="margin-top:2rem">
-        {industries.map((i) => (
-          <a class="card card-block" href={`/industries/${i.slug}`}>
-            <h3>{i.name}</h3>
-            <p class="muted">{i.answer}</p>
-          </a>
-        ))}
-      </div>
-    </div>
+<Base title="Industries — Packaging for FMCG, Pharma and Food | Yamir Packaging" description="Folding cartons for FMCG, pharmaceutical and food brands. What each industry needs from a carton supplier, and how Yamir meets it.">
+  <section class="m sec--top">
+    <Crumbs items={[{ label: 'Industries' }]} />
+    <h1 style="margin-top:3rem">Industries</h1>
+    <p class="lead" style="margin-top:1.6rem">Each industry asks something different of a carton. These pages state what you need and show how we meet it.</p>
   </section>
-</BaseLayout>
+  <section class="m sec rows">
+    {industries.map((i, n) => (
+      <a href={`/industries/${i.slug}`} class="row">
+        <Plate id={`ind-${i.slug}`} ratio="3/2" />
+        <div><h2>{i.name}</h2><p class="prose" style="margin-top:1rem">{i.answer}</p><span class="lnk" style="display:inline-block;margin-top:1.6rem">Read</span></div>
+      </a>
+    ))}
+  </section>
+</Base>
+<style>
+  .rows { display: grid; gap: var(--gap); }
+  .row { display: grid; grid-template-columns: 5fr 7fr; gap: var(--gap); align-items: center; padding-top: var(--gap); border-top: 1px solid var(--hair); }
+  .row:first-child { border-top: 0; padding-top: 0; }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+</style>

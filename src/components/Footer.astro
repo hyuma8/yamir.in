@@ -1,57 +1,45 @@
 ---
 import { company, nav, plants, certifications } from '../data/site';
 import Needs from './Needs.astro';
-const year = new Date().getFullYear();
 ---
-<footer class="ftr">
-  <div class="wrap">
-    <div class="ftr__grid">
-      <div>
-        <img src="/images/yamir-logo.svg" alt={company.name} width="150" height="58" class="ftr__logo" />
-        <p class="small muted">{company.description}</p>
-        <p class="small"><strong>Registered office</strong><br /><Needs text={company.registeredOffice} /></p>
-      </div>
-
-      <div>
-        <h4>Plants</h4>
-        <ul class="ftr__list">
-          {plants.map((p) => (
-            <li><a href={`/plants/${p.slug}`}>{p.name}</a><br /><span class="small muted">{p.city}, Gujarat</span></li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h4>Site</h4>
-        <ul class="ftr__list">
-          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Contact</h4>
-        <ul class="ftr__list">
-          <li>Phone: <a href={company.phoneHref}><Needs text={company.phone} /></a></li>
-          <li>Email: <a href={company.emailHref}><Needs text={company.email} /></a></li>
-          <li>WhatsApp: <a href={company.whatsappHref} rel="noopener"><Needs text={company.whatsapp} /></a></li>
-        </ul>
-      </div>
+<footer class="ftr m">
+  <div class="grid">
+    <div>
+      <img src="/images/yamir-logo.svg" alt={company.name} width="110" height="43" />
+      <p class="small">{company.description}</p>
+      <p class="small"><span class="lbl">Registered office</span><br /><Needs text={company.registeredOffice} /></p>
     </div>
-
-    <p class="ftr__certs small muted">
-      {certifications.map((c) => c.code).join(' · ')}
-    </p>
-    <p class="small muted">© {year} {company.name}. All rights reserved.</p>
+    <div>
+      <span class="lbl">Plants</span>
+      <ul>{plants.map((p) => <li><a href={`/plants/${p.slug}`}>{p.name}</a> <span class="small">{p.district} district</span></li>)}</ul>
+    </div>
+    <div>
+      <span class="lbl">Site</span>
+      <ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}<li><a href="/enquire">Enquire</a></li></ul>
+    </div>
+    <div>
+      <span class="lbl">Contact</span>
+      <ul>
+        <li><a href={company.phoneHref}>{company.phone}</a></li>
+        <li><a href={company.whatsappHref} rel="noopener">WhatsApp</a></li>
+        <li><a href={company.emailHref}>{company.email}</a></li>
+        <li><a href={company.linkedin} rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="base">
+    <span>{certifications.map((c) => c.code).join('  ·  ')}</span>
+    <span>© {new Date().getFullYear()} {company.name}</span>
   </div>
 </footer>
 
 <style>
-  .ftr { border-top: 1px solid var(--line); padding: 3rem 0 2rem; background: var(--bg-alt); font-size: 0.97rem; }
-  .ftr__grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); margin-bottom: 2rem; }
-  .ftr__logo { width: 140px; margin-bottom: 1rem; }
-  .ftr__list { list-style: none; padding: 0; margin: 0; }
-  .ftr__list li { margin-bottom: 0.5rem; }
-  .ftr h4 { margin-bottom: 0.75rem; }
-  .ftr__certs { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .ftr { border-top: 1px solid var(--hair); padding-top: 4rem; padding-bottom: 3rem; }
+  .grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .grid img { margin-bottom: 1.2rem; }
+  .grid ul li { margin-top: .5rem; }
+  .grid .lbl { display: block; margin-bottom: .4rem; }
+  .small { font-size: .88rem; color: var(--soft); max-width: 38ch; margin-top: .6rem; }
+  .base { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--hair); display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
 </style>

@@ -1,12 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
 ---
-<BaseLayout title="Thank you — Yamir Packaging" description="Your enquiry has been received." noEnquiry noindex>
-  <section class="section">
-    <div class="wrap">
-      <h1>Thank you. We have your enquiry.</h1>
-      <p class="lead">A packaging specialist will call or email you within one working day.</p>
-      <a class="btn btn--outline" href="/">Back to home</a>
-    </div>
+<Base title="Thank you — Yamir Packaging" description="Your enquiry has been received." noEnquiry noindex>
+  <section class="m sec--top" style="min-height:60vh;padding-bottom:var(--sec)">
+    <span class="lbl">Received</span>
+    <h1 style="margin-top:1rem">Thank you.</h1>
+    <p class="lead" style="margin:1.6rem 0 2.4rem">A packaging specialist will call or email you within one working day.</p>
+    <a class="lnk" href="/">Back to the start</a>
   </section>
-</BaseLayout>
+</Base>

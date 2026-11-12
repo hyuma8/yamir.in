@@ -1,74 +1,36 @@
 ---
 import { nav, company } from '../data/site';
 const path = Astro.url.pathname;
-const isActive = (href: string) => path === href || path.startsWith(href + '/');
+const active = (href: string) => path === href || path.startsWith(href + '/');
 ---
-<header class="hdr">
-  <div class="wrap hdr__in">
-    <a class="hdr__logo" href="/" aria-label={`${company.name} — home`}>
-      <img src="/images/yamir-logo.svg" alt={company.name} width="150" height="58" />
-    </a>
-
-    <!-- Desktop nav (900px and up) -->
-    <nav class="nav-desk" aria-label="Main">
-      <ul>
-        {nav.map((n) => (
-          <li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a></li>
-        ))}
-        <li class="nav-desk__cta"><a class="btn btn--accent" href="/contact">Send enquiry</a></li>
-      </ul>
+<header class="hdr m">
+  <a href="/" class="logo" aria-label={`${company.name}, home`}><img src="/images/yamir-logo.svg" alt="" width="118" height="46" /></a>
+  <nav class="nav" aria-label="Main">
+    {nav.map((n) => <a href={n.href} aria-current={active(n.href) ? 'page' : undefined}>{n.label}</a>)}
+    <a href="/enquire" class="enq">Enquire</a>
+  </nav>
+  <details class="menu">
+    <summary aria-label="Menu"><span>Menu</span></summary>
+    <nav aria-label="Main, mobile">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/enquire">Enquire</a>
+      <a href={company.phoneHref}>{company.phone}</a>
     </nav>
-
-    <!-- Mobile menu: CSS-only, works without JavaScript -->
-    <details class="menu">
-      <summary class="menu__btn">
-        <span class="menu__icon" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Menu</span>
-      </summary>
-      <nav class="menu__nav" aria-label="Main (mobile)">
-        <ul>
-          {nav.map((n) => (
-            <li><a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a></li>
-          ))}
-          <li class="menu__cta"><a class="btn btn--accent" href="/contact">Send enquiry</a></li>
-        </ul>
-      </nav>
-    </details>
-  </div>
+  </details>
 </header>
 
 <style>
-  .hdr { background: var(--bg); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 50; }
-  .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 72px; }
-  .hdr__logo img { width: 140px; height: auto; }
-
-  /* desktop */
-  .nav-desk { display: none; }
-  .nav-desk ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 0.25rem; }
-  .nav-desk li { margin: 0; }
-  .nav-desk a { display: block; padding: 0.5rem 0.8rem; text-decoration: none; font-weight: 500; border-radius: var(--radius); }
-  .nav-desk a:hover { background: var(--bg-alt); }
-  .nav-desk a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--primary); border-radius: 0; }
-  .nav-desk__cta { padding-left: 0.75rem; }
-  .nav-desk__cta .btn { padding: 0.65rem 1.1rem; }
-  .nav-desk__cta .btn:hover { background: var(--accent-hover); }
-
-  /* mobile */
-  .menu { position: relative; }
-  .menu__btn { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: var(--radius); font-weight: 500; color: var(--primary); }
-  .menu__btn::-webkit-details-marker { display: none; }
-  .menu__icon { display: flex; flex-direction: column; gap: 4px; }
-  .menu__icon i { display: block; width: 20px; height: 2px; background: var(--primary); }
-  .menu__nav { position: absolute; right: 0; top: calc(100% + 0.5rem); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); min-width: 240px; padding: 0.5rem; box-shadow: 0 10px 30px -12px rgba(28, 63, 96, 0.25); }
-  .menu__nav ul { list-style: none; margin: 0; padding: 0; }
-  .menu__nav li { margin: 0; }
-  .menu__nav a { display: block; padding: 0.7rem 0.9rem; border-radius: var(--radius); text-decoration: none; font-weight: 500; }
-  .menu__nav a:hover, .menu__nav a[aria-current='page'] { background: var(--bg-alt); }
-  .menu__cta { padding: 0.5rem 0.4rem 0.2rem; }
-  .menu__cta .btn { display: block; text-align: center; }
-
-  @media (min-width: 900px) {
-    .nav-desk { display: block; }
-    .menu { display: none; }
-  }
+  .hdr { position: absolute; top: 0; left: 0; right: 0; z-index: 6; display: flex; align-items: center; justify-content: space-between; height: 96px; }
+  .logo img { width: 118px; height: auto; }
+  .nav { display: flex; gap: 2.2rem; }
+  .nav a { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; padding-bottom: .3rem; border-bottom: 1px solid transparent; }
+  .nav a:hover { color: var(--soft); }
+  .nav a[aria-current='page'] { border-color: var(--ink); }
+  .menu { display: none; position: relative; }
+  .menu summary { list-style: none; cursor: pointer; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; padding: .5rem 0; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu nav { position: absolute; right: 0; top: 2.6rem; background: var(--paper); border: 1px solid var(--hair); min-width: 220px; padding: .6rem 0; display: grid; }
+  .menu nav a { padding: .7rem 1.2rem; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; }
+  .menu nav a:hover { background: var(--paper-2); }
+  @media (max-width: 900px) { .nav { display: none; } .menu { display: block; } .hdr { height: 80px; } }
 </style>

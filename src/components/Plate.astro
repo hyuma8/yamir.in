@@ -1,0 +1,31 @@
+---
+// A photograph. If public/photos/<id>.webp exists it is shown; otherwise a
+// quiet blank plate with the shot description, so the page still looks
+// finished while photographs are being made. Shot list: npm run shots.
+import { existsSync } from 'node:fs';
+import { shot } from '../data/site';
+interface Props { id: string; ratio?: string; alt?: string; class?: string }
+const { id, ratio, alt, class: cls = '' } = Astro.props;
+const s = shot(id);
+const r = ratio ?? s.ratio;
+const file = `/photos/${id}.webp`;
+const has = existsSync(`public${file}`);
+---
+{has ? (
+  <figure class={`plate ${cls}`} style={`aspect-ratio:${r}`}>
+    <img src={file} alt={alt ?? s.subject} loading="lazy" decoding="async" width="1600" />
+  </figure>
+) : (
+  <figure class={`plate plate--blank ${cls}`} style={`aspect-ratio:${r}`} role="img" aria-label={`Photograph to come: ${s.subject}`}>
+    <figcaption><span class="lbl">Photograph · {s.page}</span><span class="what">{s.subject}</span></figcaption>
+  </figure>
+)}
+
+<style>
+  .plate { margin: 0; overflow: hidden; background: var(--paper-2); }
+  .plate img { width: 100%; height: 100%; object-fit: cover; }
+  .plate--blank { display: grid; place-items: end start; padding: 1.4rem; border: 1px solid var(--hair); position: relative; }
+  .plate--blank::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,0) 50%, rgba(28,28,26,.025)); }
+  .plate--blank figcaption { position: relative; display: grid; gap: .35rem; max-width: 34ch; }
+  .plate--blank .what { font-family: var(--serif); font-size: 1.05rem; line-height: 1.35; color: var(--ink-70); font-weight: 400; }
+</style>

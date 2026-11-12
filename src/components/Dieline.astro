@@ -1,0 +1,38 @@
+---
+// Line drawings of carton styles. Cut lines solid, crease lines dashed.
+interface Props { kind: string; class?: string; large?: boolean }
+const { kind, class: cls = '', large = false } = Astro.props;
+const ste = 'M20 40 H40 V25 H66 V40 H70 V18 a6 6 0 0 1 6-6 H118 a6 6 0 0 1 6 6 V40 H130 V25 H156 V40 H190 V100 H156 V115 H130 V100 H124 V122 a6 6 0 0 1-6 6 H76 a6 6 0 0 1-6-6 V100 H66 V115 H40 V100 H20 L10 94 V46 Z';
+const steCr = 'M20 40 V100 M70 40 V100 M124 40 V100 M160 40 V100 M20 40 H190 M20 100 H190';
+---
+<svg class={`dl ${cls}`} viewBox="0 0 200 140" aria-hidden="true" data-kind={kind}>
+  {kind === 'blister' ? (
+    <Fragment>
+      <rect class="cut" x="55" y="12" width="90" height="116" rx="4"/>
+      <path class="cut" d="M90 22 h20 a5 5 0 0 1 0 10 h-20 a5 5 0 0 1 0-10 Z"/>
+      <rect class="cr" x="70" y="48" width="60" height="62" rx="10"/>
+    </Fragment>
+  ) : (
+    <Fragment>
+      <path class="cut" d={ste}/>
+      <path class="cr" d={steCr}/>
+      {kind === 'liner' && <rect class="cr" x="76" y="46" width="42" height="48"/>}
+      {kind === 'flute' && <path class="thin" d="M12 108 q4-5 8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0"/>}
+      {kind === 'window' && <rect class="win" x="80" y="50" width="34" height="40" rx="8"/>}
+      {kind === 'foil' && <rect class="foil" x="72" y="42" width="50" height="22"/>}
+      {kind === 'pharma' && <g class="dot"><circle cx="82" cy="56" r="1.6"/><circle cx="82" cy="62" r="1.6"/><circle cx="88" cy="56" r="1.6"/><circle cx="96" cy="56" r="1.6"/><circle cx="96" cy="62" r="1.6"/><circle cx="102" cy="62" r="1.6"/><circle cx="102" cy="68" r="1.6"/><circle cx="110" cy="56" r="1.6"/><circle cx="110" cy="62" r="1.6"/><circle cx="110" cy="68" r="1.6"/></g>}
+    </Fragment>
+  )}
+  {large && <Fragment><text x="45" y="74">side</text><text x="92" y="74">front</text><text x="138" y="74">side</text><text x="170" y="74">back</text></Fragment>}
+</svg>
+
+<style>
+  .dl { width: 100%; height: auto; }
+  .dl .cut { fill: none; stroke: var(--ink); stroke-width: .8; }
+  .dl .cr { fill: none; stroke: var(--ink); stroke-width: .7; stroke-dasharray: 3 4; opacity: .55; }
+  .dl .thin { fill: none; stroke: var(--ink); stroke-width: .6; opacity: .5; }
+  .dl .win { fill: var(--paper-2); stroke: var(--ink); stroke-width: .8; }
+  .dl .foil { fill: var(--paper-3); stroke: var(--ink); stroke-width: .6; }
+  .dl .dot { fill: var(--ink); }
+  .dl text { font-family: var(--sans); font-size: 6px; letter-spacing: .1em; text-transform: uppercase; fill: var(--soft); }
+</style>

@@ -1,0 +1,40 @@
+---
+// Enquiry: three contact lines and a five-field form. On every page.
+import { company } from '../data/site';
+interface Props { subject?: string; title?: string }
+const { subject = 'Enquiry from yamir.in', title = 'Tell us what you need packed' } = Astro.props;
+---
+<section class="ask m sec" id="enquiry">
+  <div>
+    <span class="lbl">Enquiry</span>
+    <h2 class="t">{title}</h2>
+    <p class="lead">Product, quantity and when you need it is enough to start. A packaging specialist replies within one working day.</p>
+    <dl>
+      <dt>Phone</dt><dd><a href={company.phoneHref}>{company.phone}</a></dd>
+      <dt>WhatsApp</dt><dd><a href={company.whatsappHref} rel="noopener">{company.whatsapp}</a></dd>
+      <dt>Email</dt><dd><a href={company.emailHref}>{company.email}</a></dd>
+    </dl>
+  </div>
+  <form class="form" method="POST" action={company.formEndpoint}>
+    <input type="hidden" name="access_key" value={company.formAccessKey} />
+    <input type="hidden" name="subject" value={subject} />
+    <input type="hidden" name="redirect" value={`${company.domain}/thank-you`} />
+    <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+    <label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name" />
+    <label for="f-co">Company</label><input id="f-co" name="company" required autocomplete="organization" />
+    <label for="f-ph">Phone</label><input id="f-ph" name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+    <label for="f-em">Email</label><input id="f-em" name="email" type="email" required autocomplete="email" />
+    <label for="f-msg">What do you need packed</label><textarea id="f-msg" name="message" required></textarea>
+    <button class="btn" type="submit">Send enquiry</button>
+  </form>
+</section>
+
+<style>
+  .ask { display: grid; grid-template-columns: 6fr 1fr 5fr; align-items: start; border-top: 1px solid var(--hair); }
+  .ask form { grid-column: 3; }
+  .t { margin: 1rem 0 1.4rem; }
+  .ask dl { display: grid; grid-template-columns: 110px 1fr; row-gap: .9rem; margin: 2.2rem 0 0; }
+  .ask dt { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); padding-top: .25rem; }
+  .ask dd { margin: 0; }
+  @media (max-width: 900px) { .ask { grid-template-columns: 1fr; } .ask form { grid-column: 1; margin-top: 2rem; } }
+</style>
