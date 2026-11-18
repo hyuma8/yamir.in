@@ -664,6 +664,35 @@ button.tqv{all:unset;cursor:pointer;color:var(--ink);text-transform:inherit;lett
 @media (min-width:901px){#run .art{container-type:size;align-self:stretch;display:flex;flex-direction:column;justify-content:center;min-height:0}
   #run .linewrap.l3{width:min(100cqw,calc((100cqh - 46px) * 3.117));margin-inline:auto} #run .pin{row-gap:clamp(.7rem,2.2vh,1.5rem)!important}}
 @media (max-width:900px){.has3d .c3d{height:clamp(210px,36vh,300px)!important}}
+
+/* slower scroll films on touch screens and small screens */
+@media (pointer:coarse),(max-width:900px){.js .scene{height:280vh} .js .scene.long{height:420vh} .js #seen{height:720vh} .js #factors{height:720vh}}
+/* phones: each page fits one screen */
+@media (max-width:700px){
+  #root .sec,#root .brandsec{padding-block:1.1rem 1.3rem!important}
+  #root .sec h2,#root .brandsec h2{font-size:1.35rem!important;line-height:1.2!important;margin-bottom:.4rem!important}
+  .brandsec .bfifty{font-size:.86rem!important;line-height:1.4!important;margin:0 auto!important}
+  .blogos{grid-template-columns:repeat(3,1fr)!important;gap:1.1rem .9rem!important;margin-top:1.1rem!important}
+  .blogos .bl{height:52px!important} .blogos .bl .bw,.blogos .bl .cl{max-width:88%!important}
+  #proof{row-gap:.9rem!important} #proof .phead{margin-bottom:.2rem!important}
+  .certbox{padding:.8rem 1rem .3rem!important} .certbox .certs{margin-top:.5rem!important}
+  .certbox .certs button{display:grid!important;grid-template-columns:22px 1fr auto!important;column-gap:.7rem!important;row-gap:0!important;align-items:center!important;padding:.42rem 0!important}
+  .certbox .certs b{font-size:1.02rem!important;grid-column:2;grid-row:1} .certbox .certs span{grid-column:2!important;grid-row:2!important;font-size:.74rem!important;text-align:left!important;line-height:1.25!important;margin:0!important;padding:0!important} .certbox .certs i{grid-column:3;grid-row:1/3;font-size:.68rem!important} .certbox .certs .ctk{grid-row:1/3;width:20px;height:20px}
+  #proof .tcard{padding:.8rem 1rem .9rem!important} .tqt.lg{padding-top:.7rem!important} #proof .tq4 .tqf{padding:.8rem 0 .2rem!important}
+  #proof .tq4 .tqf blockquote{font-size:.98rem!important;line-height:1.4!important} #proof .tq4 .tqf figcaption{margin-top:.7rem!important} #proof .tq4 .tqf figcaption .lbl{font-size:.66rem!important;line-height:1.5!important}
+  .inno .ihead .lead{display:none!important} .inno .ihead{margin-bottom:.5rem!important}
+  .has3d.cstage{padding:.7rem .9rem .6rem!important;row-gap:.5rem!important}
+  .has3d .ctabs{flex-wrap:nowrap!important;overflow-x:auto;gap:.35rem!important;margin:0 -.9rem!important;padding:0 .9rem .2rem!important;scrollbar-width:none} .has3d .ctabs::-webkit-scrollbar{display:none}
+  .has3d .ctabs button{flex:none;font-size:.68rem!important;padding:.38rem .7rem!important;white-space:nowrap}
+  .has3d .ctext .lbl{font-size:.66rem!important} .has3d .big12{margin:.1rem 0!important;font-size:.5em} .has3d .big12 b{font-size:2.1rem!important} 
+  .has3d .ctext h3{font-size:1.12rem!important;line-height:1.2!important;margin:.15rem 0 .25rem!important} .has3d .ctext p:not(.big12){font-size:.84rem!important;line-height:1.4!important;margin:0!important}
+  .has3d .csteps{gap:.3rem!important;margin-top:.5rem!important} .has3d .csteps li{font-size:.7rem!important;padding:.22rem .55rem!important}
+  .has3d .c3d{height:clamp(150px,27vh,210px)!important} .has3d .cnote{position:static!important;font-size:.66rem!important;line-height:1.3!important;display:block} .has3d .c3h{display:none}
+  .has3d .csteps{display:none!important} #innovate .ihead .lbl{display:none} #innovate .ihead h2{font-size:1.15rem!important;margin:0!important} #innovate{row-gap:.5rem!important;gap:.5rem!important}
+  .has3d .c3d{height:clamp(140px,25vh,200px)!important} .cstage{margin-top:0!important}
+  #types .lead{display:none!important} #types{row-gap:.6rem!important}
+  #types .lead{font-size:.86rem!important;line-height:1.45!important} .coll li{padding:.45rem 0!important;gap:.1rem .8rem!important} .coll .ic{width:38px!important} .coll b{font-size:1rem!important} .coll span{font-size:.76rem!important;line-height:1.3!important}
+}
 #ldlg{width:min(760px,94vw)} .ldl{position:relative;padding:1rem} .ldl img{display:block;width:100%;height:auto;border:1px solid var(--hair)} .ldl .x{all:unset;cursor:pointer;position:sticky;top:.6rem;float:right;margin:0 0 .7rem;z-index:2;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--paper);padding:.2rem 0;border-bottom:1.5px solid var(--orange)} .ldl .x:focus-visible{outline:2px solid var(--orange);outline-offset:3px} .ldl img{clear:both}
 @media (max-width:700px){#proof .tq4 .tqf blockquote,#proof .tq4 .tqf figcaption{padding-left:1.6rem} #proof .tq4 .tqf blockquote::before{font-size:2.4rem}}
 </style>
