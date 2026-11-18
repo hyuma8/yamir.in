@@ -1,6 +1,0 @@
----
-import { isNeeds } from '../data/site';
-interface Props { text: string }
-const { text } = Astro.props;
----
-{isNeeds(text) ? <mark class="needs">{text}</mark> : <Fragment>{text}</Fragment>}
