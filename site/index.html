@@ -652,6 +652,18 @@ button.tqv{all:unset;cursor:pointer;color:var(--ink);text-transform:inherit;lett
 @media (max-width:700px){.tqt.lg{gap:.4rem} .tqt.lg button{height:48px} .tqt.lg button img{max-width:82%;max-height:30px}}
 .hpw{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 #sent{margin-top:.9rem;text-transform:none;letter-spacing:0;font-size:.95rem;color:var(--navy);line-height:1.5} #sent.bad{color:#a23b12}
+
+/* fit to screen */
+.pinbox{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.js .pinscale>.pin{position:relative;top:auto;height:100%}
+.pinscale{height:100%}
+.fitw{display:flow-root}
+.fit .pinscale{width:calc(100% / var(--k));height:calc(100% / var(--k));transform:scale(var(--k));transform-origin:0 0}
+.fit .js .pinscale>.pin,.fit.js .pinscale>.pin{padding-top:calc(var(--hh) / var(--k) + 14px)}
+@media (min-width:901px){.fit .fitw{width:calc(100% / var(--k));transform:scale(var(--k));transform-origin:0 0} .fit .fitw>section{min-height:calc((100svh - var(--hh)) / var(--k))!important}}
+@media (min-width:901px){#run .art{container-type:size;align-self:stretch;display:flex;flex-direction:column;justify-content:center;min-height:0}
+  #run .linewrap.l3{width:min(100cqw,calc((100cqh - 46px) * 3.117));margin-inline:auto} #run .pin{row-gap:clamp(.7rem,2.2vh,1.5rem)!important}}
+@media (max-width:900px){.has3d .c3d{height:clamp(210px,36vh,300px)!important}}
 #ldlg{width:min(760px,94vw)} .ldl{position:relative;padding:1rem} .ldl img{display:block;width:100%;height:auto;border:1px solid var(--hair)} .ldl .x{all:unset;cursor:pointer;position:sticky;top:.6rem;float:right;margin:0 0 .7rem;z-index:2;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--paper);padding:.2rem 0;border-bottom:1.5px solid var(--orange)} .ldl .x:focus-visible{outline:2px solid var(--orange);outline-offset:3px} .ldl img{clear:both}
 @media (max-width:700px){#proof .tq4 .tqf blockquote,#proof .tq4 .tqf figcaption{padding-left:1.6rem} #proof .tq4 .tqf blockquote::before{font-size:2.4rem}}
 </style>
@@ -862,6 +874,24 @@ button.tqv{all:unset;cursor:pointer;color:var(--ink);text-transform:inherit;lett
  </div>
 </section>
 </main>
+<script>/* Fit to screen: the pages are designed for a screen about 740px tall (780px on phones).
+On a shorter screen each page is laid out at that size and scaled down to fit, so nothing overlaps or is cut. */
+(function(){var de=document.documentElement,root=document.getElementById('root');if(!root||!('ResizeObserver' in window))return;
+  var probe=document.createElement('div');probe.style.cssText='position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';de.appendChild(probe);
+  [].slice.call(root.querySelectorAll('.scene>.pin')).forEach(function(p){var b=document.createElement('div'),s=document.createElement('div');b.className='pinbox';s.className='pinscale';p.parentNode.insertBefore(b,p);b.appendChild(s);s.appendChild(p);});
+  var flows=[].slice.call(root.children).filter(function(s){return s.tagName==='SECTION'&&!s.classList.contains('scene');}).map(function(s){var w=document.createElement('div');w.className='fitw';s.parentNode.insertBefore(w,s);w.appendChild(s);return {w:w,s:s};});
+  var hdr=document.querySelector('header'),k=1,raf=0;
+  function margins(){var on=k<1&&de.clientWidth>900;flows.forEach(function(f){f.w.style.marginBottom=on?(-(1-k)*f.w.offsetHeight)+'px':'';});}
+  function apply(){var H=probe.offsetHeight||innerHeight,W=de.clientWidth,D=W>1150?740:W>900?900:780,nk=Math.min(1,Math.max(.5,H/D));nk=Math.round(nk*200)/200;
+    de.style.setProperty('--hh',(hdr?hdr.offsetHeight:75)+'px');
+    if(nk!==k){k=nk;de.style.setProperty('--k',k);de.classList.toggle('fit',k<1);}
+    margins();}
+  de.style.setProperty('--k',1);apply();
+  var ro=new ResizeObserver(function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(margins);});flows.forEach(function(f){ro.observe(f.s);});
+  var lw=de.clientWidth,lh=probe.offsetHeight;addEventListener('resize',function(){var w=de.clientWidth,h=probe.offsetHeight;if(w===lw&&h===lh)return;lw=w;lh=h;apply();});
+  addEventListener('load',apply);
+})();</script>
+
 <footer class="g lbl"><span>© 2026 Yamir Packaging Pvt. Ltd.</span><span>Designed and developed by <a href="https://www.linkedin.com/in/hyuma-mahadevia/" target="_blank" rel="noopener">Hyuma Mahadevia</a></span></footer>
 
 <script>
@@ -1386,7 +1416,7 @@ button.tqv{all:unset;cursor:pointer;color:var(--ink);text-transform:inherit;lett
         else{root.visible=false;BL.visible=true;var dist=0,NS=200,hs=t/NS,VMAX=1.75*d.num/60;for(var q9=0;q9<NS;q9++){dist+=Math.max(.5,VMAX*sm(d.nw[0],d.nw[1],(q9+.5)*hs))*hs;}var tu=window.__ft!=null?t:(on?(now-t0)/1000:0);if(tu>10)dist+=(tu-10)*VMAX;slats.forEach(function(m,k){m.position.x=((k*1.75+.875+dist)%15.75)-7.875;});runs.forEach(function(g,k){var x=((k*1.75+dist)%15.75)-7.9,u=g.userData;g.position.set(x,-1.53,0);u.pr.visible=x>-4.6;u.pr.position.y=2.78-2*sm(-4.4,-2.7,x);var c1=sm(-1.7,-.5,x),c2=sm(-.5,.8,x);u.fs.forEach(function(f,i){f.g.rotation[f.ax]=f.o+(f.s-f.o)*(i<2?c1:c2);});});}
         setFlaps(fl);wallOp(wo);FG.rotation.z=fk*Math.PI/2;
         (tab===4?BL:root).rotation.y=(tab===4?-.32:-.17)+(tab===1?.22:.05)*Math.sin(now/2600)+user;rd.render(sc,cam);}
-      function fit(){W=el.clientWidth;H=el.clientHeight;if(!W||!H)return;rd.setSize(W,H,false);cam.aspect=W/H;var d=TABS[tab],k=W/H<1.5?1.55:1;camZ=d.z*k;cam.position.set(0,d.y*(k>1?1.2:1),camZ);cam.lookAt(0,d.ly,0);cam.updateProjectionMatrix();}
+      function fit(){W=el.clientWidth;H=el.clientHeight;if(!W||!H)return;rd.setSize(W,H,false);cam.aspect=W/H;var d=TABS[tab],asp=W/H,k=asp<1.5?Math.min(1.9,1.5/asp):1;camZ=d.z*k;cam.position.set(0,d.y*(k>1?1.2:1),camZ);cam.lookAt(0,d.ly,0);cam.updateProjectionMatrix();}
       setTab(ORD[0]);addEventListener('resize',fit);
       new IntersectionObserver(function(es){vis=es[0].isIntersecting;}).observe(el);
       el.addEventListener('pointerdown',function(e){drag={x:e.clientX,u:user};try{el.setPointerCapture(e.pointerId);}catch(_){}});
