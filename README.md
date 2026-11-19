@@ -18,6 +18,7 @@ The Yamir Packaging website. It is a plain static site: no build step.
 
 ## Things to know
 
+- `site/email/` holds the email signature cards (black, green, cream). Gmail signatures load them from https://yamir.in/email/. When you replace the contents of `site/` with a new launch folder, keep `site/email/`, or every signature loses its card.
 - The enquiry form sends to a Google Apps Script web app owned by hyuma@yamir.in, which saves a row in the "Yamir Website Enquiries" Sheet and emails sales@yamir.in. Details are in the Claude project note `enquiry-form`.
 - FSC is deliberately left off the site until FSC approves its use. Details are in the Claude project note `fsc-restore`.
 - The old Astro site and the "website is being upgraded" holding page are in git history (commit 4dc5c97). The `HOLDING` setting in Vercel no longer does anything and can be deleted.
