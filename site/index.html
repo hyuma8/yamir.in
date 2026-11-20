@@ -1537,6 +1537,10 @@ On a shorter screen each page is laid out at that size and scaled down to fit, s
   addEventListener('wheel',guard,{passive:false});addEventListener('touchmove',guard,{passive:false});
   addEventListener('keydown',function(e){if(now()<lockUntil&&/^(ArrowDown|ArrowUp|PageDown|PageUp|Home|End| |Spacebar)$/.test(e.key)&&!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))e.preventDefault();});
   document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(a){bypass=now()+9000;clearInterval(navIv);var ly=scrollY,same=0,n=0;navIv=setInterval(function(){n++;if(scrollY===ly)same++;else same=0;ly=scrollY;if((same>=2&&n>3)||n>80){clearInterval(navIv);if(bypass>now()+80)bypass=now()+80;}},110);}});var navIv=0;
+  // a link that opens the page at a section (yamir.in/#proof): go straight there, no stop on the way
+  function goHash(){var h=location.hash,el=null;if(!h||h.length<2)return;try{el=document.getElementById(decodeURIComponent(h.slice(1)));}catch(_){}if(!el)return;bypass=now()+1200;el.scrollIntoView({behavior:'instant',block:'start'});lastY=scrollY;}
+  addEventListener('hashchange',goHash);
+  if(location.hash.length>1){bypass=now()+4000;goHash();addEventListener('load',function(){goHash();setTimeout(goHash,350);});}
   addEventListener('scrollend',function(){if(bypass&&now()<bypass){bypass=now()+80;}});
   function hardStop(){var y=scrollY,t=now();if(window.__noStop){lastY=y;return;}
     if(t<lockUntil){lastY=lockY;return;}
