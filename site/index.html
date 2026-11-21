@@ -764,12 +764,9 @@ header nav a.cur{color:var(--ink);text-decoration:underline;text-decoration-colo
 @media (min-width:901px){.has3d .cnote{position:static!important;grid-column:1/-1;display:block}.has3d .c3d{height:calc(clamp(300px,54vh,600px) - 1.6rem)}.has3d.cstage{row-gap:.15rem}}
 @media (min-width:901px) and (max-height:640px){.has3d .csteps li{padding:.08rem .55rem!important}.has3d.cstage p{line-height:1.4}.has3d .ctabs{margin-bottom:0}}
 @media (min-width:1700px) and (min-height:900px){.rig{--k:1.5}}
-/* section names are the big heading; the old headline is the smaller line under it (option B, 21 Nov) */
-.lbl.sl{display:block;font-family:var(--serif);font-weight:var(--hw,300);text-transform:none;letter-spacing:-.015em;color:var(--ink);font-size:calc(clamp(2.1rem,3.8vw,3.4rem) * var(--hz,1));line-height:1.1;margin-bottom:0!important}
-.lbl.sl ~ h2,.lbl.sl ~ .endh{font-size:1.625rem!important;line-height:1.25!important;color:var(--ink-70);margin-top:.45rem!important;max-width:none}
-@media (max-width:700px){#root .lbl.sl ~ h2,#root .lbl.sl ~ .endh{font-size:1.125rem!important;margin-top:.3rem!important}#innovate .ihead .lbl.sl{display:block}}
-@media (max-width:700px){.has3d .c3d{height:clamp(90px,calc(100svh - 566px),190px)!important}}
-@media (max-width:700px) and (max-height:700px){#innovate .ihead h2{display:none!important}.has3d .c3d{height:clamp(90px,calc(100svh - 518px),190px)!important}}
+/* section names in orange letters, bold and bigger (option A, 21 Nov) */
+.lbl.sl{color:var(--orange);font-weight:600;font-size:1.1875rem;letter-spacing:.13em}
+@media (max-width:700px){.lbl.sl{font-size:.9375rem}}
 /*END19*/#ldlg{width:min(760px,94vw)} .ldl{position:relative;padding:1rem} .ldl img{display:block;width:100%;height:auto;border:1px solid var(--hair)} .ldl .x{all:unset;cursor:pointer;position:sticky;top:.6rem;float:right;margin:0 0 .7rem;z-index:2;font-size:.8125rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--paper);padding:.2rem 0;border-bottom:1.5px solid var(--orange)} .ldl .x:focus-visible{outline:2px solid var(--orange);outline-offset:3px} .ldl img{clear:both}
 @media (max-width:700px){#proof .tq4 .tqf blockquote,#proof .tq4 .tqf figcaption{padding-left:1.6rem} #proof .tq4 .tqf blockquote::before{font-size:2.4rem}}
 </style>
