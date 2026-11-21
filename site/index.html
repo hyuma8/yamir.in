@@ -766,37 +766,6 @@ header nav a.cur{color:var(--ink);text-decoration:underline;text-decoration-colo
 @media (min-width:1700px) and (min-height:900px){.rig{--k:1.5}}
 /* section names in orange, same size as the Our vision label (13px), bold (21 Nov) */
 .lbl.sl{color:var(--orange);font-weight:600;font-size:.8125rem;letter-spacing:.13em}
-/* last page: the footer is part of the Enquiry page, and on laptops the whole page fits one screen */
-footer.endft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem 1rem;border-top:1px solid var(--hair);padding-block:1rem .4rem;margin-top:1.2rem}
-@media (min-width:901px){
-  #ask.last{padding-block:.8rem .4rem!important}
-  #ask.last{min-height:calc(100svh - var(--hh,76px))}
-  #ask .rt i{white-space:nowrap}
-  #ask .ask{margin-bottom:.8rem!important;gap:clamp(1.5rem,4vw,4rem)}
-  #ask .endh{max-width:none;margin-top:.4rem!important;font-size:calc(clamp(2.1rem,3.8vw,3.4rem) * var(--hz,1))!important;line-height:1.1!important}
-  #ask .endl{display:grid;grid-template-columns:auto 1fr;column-gap:1.8rem;align-items:end}
-  #ask .endl>.lbl,#ask .endl>.endh{grid-column:1/-1}
-  #ask .big{margin-top:.7rem;gap:.6rem}
-  #ask .waq{margin-top:0;gap:.9rem}
-  #ask .qr{width:84px;height:84px}
-  #ask .human{margin:0 0 .2rem;max-width:28ch;align-self:end}
-  #ask form label{margin:.35rem 0 0}
-  #ask form input,#ask form textarea{padding:.35rem 0}
-  #ask form textarea{min-height:46px;height:46px}
-  #ask .acts{margin-top:.7rem;flex-wrap:nowrap;gap:1rem}
-  #ask .acts .hintl{flex:1;line-height:1.35}
-  #ask form .btn{padding:.8rem 1.4rem}
-  #ask .route>.lbl{margin-bottom:.45rem}
-  #ask .rt li{padding-top:1rem;display:grid;grid-template-columns:auto 1fr;column-gap:.7rem;align-items:baseline}
-  #ask .rt li>address,#ask .rt li>a{grid-column:1/-1;justify-self:start}
-  #ask .rt{grid-template-columns:1.2fr 1.1fr .95fr 1.4fr}
-  #ask .rt address{line-height:1.35;margin-top:.2rem;max-width:none}
-  #ask .rt a{margin-top:.1rem}
-  #ask .dir{margin-top:.7rem!important;padding-top:.6rem;gap:.3rem clamp(1.2rem,2.4vw,2.4rem)!important}
-  #ask .dc .li{padding:.4rem .8rem}
-  footer.endft{margin-top:.6rem;padding-block:.5rem 0}
-}
-#root{display:flow-root}
 /*END19*/#ldlg{width:min(760px,94vw)} .ldl{position:relative;padding:1rem} .ldl img{display:block;width:100%;height:auto;border:1px solid var(--hair)} .ldl .x{all:unset;cursor:pointer;position:sticky;top:.6rem;float:right;margin:0 0 .7rem;z-index:2;font-size:.8125rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--paper);padding:.2rem 0;border-bottom:1.5px solid var(--orange)} .ldl .x:focus-visible{outline:2px solid var(--orange);outline-offset:3px} .ldl img{clear:both}
 @media (max-width:700px){#proof .tq4 .tqf blockquote,#proof .tq4 .tqf figcaption{padding-left:1.6rem} #proof .tq4 .tqf blockquote::before{font-size:2.4rem}}
 </style>
@@ -1007,7 +976,6 @@ footer.endft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem
    <div class="dc" id="updates" style="--i:3"><i>Updates</i><a href="https://www.linkedin.com/feed/update/urn:li:activity:7505856776848932864">Latest from the team</a><a href="https://pressideas.com/quality-day-at-yamir-packaging/">Quality Day at Yamir</a></div>
    <div class="dc" style="--i:4"><a class="li" href="https://www.linkedin.com/company/yamir-packaging-pvt-ltd/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.500 2.500 0 1 1 0 5 2.500 2.500 0 0 1 0-5ZM3 9.750h4V21H3V9.750Zm6.500 0h3.800v1.550c.6-1 1.900-1.850 3.800-1.850 3.300 0 3.900 2.200 3.900 5.050V21h-4v-5.700c0-1.400-.5-2.300-1.700-2.300-1.300 0-1.800.900-1.800 2.300V21h-4V9.750Z"/></svg>Follow on LinkedIn</a></div>
  </div>
- <footer class="lbl endft"><span>© 2026 Yamir Packaging Pvt. Ltd.</span><span>Designed and developed by <a href="https://www.linkedin.com/in/hyuma-mahadevia/" target="_blank" rel="noopener">Hyuma Mahadevia</a></span></footer>
  </div>
 </section>
 </main>
@@ -1029,7 +997,7 @@ On a shorter screen each page is laid out at that size and scaled down to fit, s
   addEventListener('load',apply);
 })();</script>
 
-
+<footer class="g lbl"><span>© 2026 Yamir Packaging Pvt. Ltd.</span><span>Designed and developed by <a href="https://www.linkedin.com/in/hyuma-mahadevia/" target="_blank" rel="noopener">Hyuma Mahadevia</a></span></footer>
 
 <script>
 (function(){
